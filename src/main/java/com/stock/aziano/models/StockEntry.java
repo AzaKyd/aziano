@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,30 +14,31 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "StockEntries")
+@Table(name = "stock_entry")
 public class StockEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long entryId;
+    private Long Id;
 
     @ManyToMany
     @JoinTable(
-            name = "entry_products",
-            joinColumns = @JoinColumn(name = "entry_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
+            name = "entry_product",
+            joinColumns = @JoinColumn(name = "stock_entry_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
     private List<Product> products;
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "entry_date", nullable = false)
     private LocalDateTime entryDate;
-
-    // Getters and Setters
 }

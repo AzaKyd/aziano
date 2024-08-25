@@ -1,10 +1,13 @@
 package com.stock.aziano.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -13,35 +16,54 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Products")
+@Table(name = "products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", insertable=false, updatable=false)
-    private Long productId;
+    private Long Id;
 
-    @Column(unique = true)
+    @NonNull
+    @Column(name = "product_code", nullable = false, unique = true)
     private String productCode;
 
-    @Column(unique = true)
+    @NonNull
+    @Column(name = "barcode", nullable = false, unique = true)
     private String barcode;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "cost_price", nullable = false)
     private Double costPrice;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "selling_price", nullable = false)
     private Double sellingPrice;
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Sale> sales;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "sale_product",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "sale_id", referencedColumnName = "id")
+    )
+    private List<Sale> sales;
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "entry_product",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "stock_entry_id", referencedColumnName = "id")
+    )
+    private List<StockEntry> stockEntries;
 
     @Column(length = 1000)  // Указываем длину строки для хранения URL
     private String imageUrl; // Поле для URL-адреса изображения
@@ -52,7 +74,7 @@ public class Product {
     @PrePersist
     private void generateProductCode() {
         if (this.productCode == null || this.productCode.isEmpty()) {
-            this.productCode = String.format("%05d", this.productId);
+            this.productCode = String.format("%05d", this.getId());
         }
     }
 

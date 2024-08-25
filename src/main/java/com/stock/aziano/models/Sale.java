@@ -1,5 +1,6 @@
 package com.stock.aziano.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,38 +10,45 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.stock.aziano.models.Product;
+import lombok.NonNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Sales")
+@Table(name = "sales")
 public class Sale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long saleId;
+    private Long Id;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "sale_products",
-            joinColumns = @JoinColumn(name = "sale_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
+            name = "sale_product",
+            joinColumns = @JoinColumn(name = "sale_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
     private List<Product> products;
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "sale_date", nullable = false)
     private LocalDateTime saleDate;
 
-    @Column(nullable = false)
+    @NonNull
+    @Column(name = "selling_price", nullable = false)
     private Double sellingPrice;
 
-    // Getters and Setters
+    @Column(name = "discount")
+    private Double discount;
 }
