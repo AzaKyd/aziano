@@ -12,3 +12,5 @@ spring:
     locations: classpath:db/migration
     baseline-on-migrate: true
     schemas: public
+  thymeleaf:
+    cache: false
