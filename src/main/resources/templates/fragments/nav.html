@@ -1,0 +1,64 @@
+<div class="sidebar" data-background-color="dark" th:fragment="nav">
+    <div class="sidebar-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+            <a th:href="@{/}" class="logo">
+                <h3 style="color: white; font-size: 25px; font-weight: bold;">AZIANO</h3>
+            </a>
+            <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                    <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                    <i class="gg-menu-left"></i>
+                </button>
+            </div>
+            <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+            </button>
+        </div>
+        <!-- End Logo Header -->
+    </div>
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+                <li class="nav-item">
+                    <a th:href="@{/}">
+                        <i class="fas fa-desktop"></i>
+                        <p>Статистика</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/products}">
+                        <i class="fas fa-file"></i>
+                        <p>Продажа</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/posting}">
+                        <i class="fas fa-pen-square"></i>
+                        <p>Оприходование</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/facilities}">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Склад</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/products}">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Товары</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/categories}">
+                        <i class="fas fa-th-list"></i>
+                        <p>Категории</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div >
