@@ -19,7 +19,7 @@
                             <div class="card-header">
                                 <div class="card-title">Добавить категорию</div>
                             </div>
-                            <form th:action="@{./add}" method="POST">
+                            <form th:action="@{/category/update}" method="POST">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
@@ -28,7 +28,8 @@
                                                     Наименование категории
                                                 </label>
                                                 <div class="col-md-6 p-0">
-                                                    <input type="text" class="form-control input-full" id="category" name="categoryName" placeholder="Наименование категории" required />
+                                                    <input th:value="${category.categoryName}" type="text" class="form-control input-full" id="category" name="categoryName" placeholder="Наименование категории" required />
+                                                    <input type="hidden" th:value="${category.id}" name="id" required/>
                                                 </div>
                                                 <small th:if="${error}" class="form-text text-danger" th:text="${error}"></small>
                                             </div>

@@ -1,11 +1,14 @@
 package com.stock.aziano.dto;
 
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CategoryDto {
+    private Long id;
     private String categoryName;
 }
