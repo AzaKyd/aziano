@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="wrapper">
+
+    <div th:replace="~{fragments/nav :: nav}"></div>
+    <div class="main-panel">
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="container">
+            <div class="page-inner">
+                <div class="page-header">
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Добавить категорию</div>
+                            </div>
+                            <form th:action="@{/facility/update}" method="POST">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="name" class="col-md-3 col-form-label">
+                                                    Наименование слкада
+                                                </label>
+                                                <div class="col-md-6 p-0">
+                                                    <input th:value="${facility.name}" type="text" class="form-control input-full" id="name" name="name" placeholder="Наименование категории" required />
+                                                </div>
+                                                <small th:if="${error}" class="form-text text-danger" th:text="${error}"></small>
+                                                <label for="location" class="col-md-3 col-form-label">
+                                                    Адрес
+                                                </label>
+                                                <div class="col-md-6 p-0">
+                                                    <input th:value="${facility.location}" type="text" class="form-control input-full" id="location" name="location" placeholder="Наименование категории" required />
+                                                </div>
+                                                <input type="hidden" th:value="${facility.id}" name="id" required/>
+                                                <small th:if="${error}" class="form-text text-danger" th:text="${error}"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <button type="submit" class="btn btn-success">Сохранить</button>
+                                    <a th:href="@{/facility}" class="btn btn-danger">Отмена</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+
+
+</div>
+<div th:replace="~{fragments/script :: script}">
+
+</div>
+</body>
+</html>

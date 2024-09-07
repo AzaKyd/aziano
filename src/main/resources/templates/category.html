@@ -38,13 +38,12 @@
             <div class="card">
               <div class="card-header">
                 <div class="d-flex align-items-center">
-                  <h4 class="card-title">Add Row</h4>
                   <a
                           th:href="@{/category/add}"
                           class="btn btn-primary btn-round ms-auto"
                   >
                     <i class="fa fa-plus"></i>
-                    Add Row
+                    Добавить категорию
                   </a>
                 </div>
               </div>
@@ -106,12 +105,14 @@
 
 
 </div>
-<p th:if="${message}" id="custom-notify-message" th:text="${message}"></p>
-<div th:replace="~{fragments/script :: script}">
 
+<div th:replace="~{fragments/script :: script}">
 </div>
+
+<p th:if="${message}" id="custom-notify-message" th:text="${message}"></p>
+
 <script th:if="${message}">
-  $(document).ready(function() {
+  $(document).ready(function () {
     var placementFrom = "bottom";
     var placementAlign = "right";
     var state = "success";
@@ -119,6 +120,9 @@
     var content = {};
 
     content.message = $("#custom-notify-message").text();
+    if(content.message.includes("Ошибка")){
+      state = "warning"
+    }
     content.title = "Уведомление";
     if (style == "withicon") {
       content.icon = "fa fa-bell";

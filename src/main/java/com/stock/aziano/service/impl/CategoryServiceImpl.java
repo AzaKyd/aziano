@@ -1,19 +1,15 @@
 package com.stock.aziano.service.impl;
 
 import com.stock.aziano.dto.CategoryDto;
-import com.stock.aziano.exception.AccessDeniedException;
 import com.stock.aziano.exception.DataIsUniqueException;
 import com.stock.aziano.exception.ResourceNotFoundException;
+import com.stock.aziano.mappers.CategoryMapper;
 import com.stock.aziano.models.Category;
 import com.stock.aziano.repository.CategoryRepository;
-import com.stock.aziano.mappers.CategoryMapper;
 import com.stock.aziano.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

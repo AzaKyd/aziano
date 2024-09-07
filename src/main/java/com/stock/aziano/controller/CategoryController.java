@@ -38,7 +38,7 @@ public class CategoryController {
     }
 
     @GetMapping("/add")
-    public String addCategory(Model model) {
+    public String addCategory() {
         return "/forms/category/add-category";
     }
 
@@ -68,7 +68,7 @@ public class CategoryController {
             categoryService.updateCategory(categoryDto);
             redirectAttributes.addFlashAttribute("message", "Категория успешно обновлена!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Ошибка при обновлении категории.");
+            redirectAttributes.addFlashAttribute("message", "Ошибка при обновлении категории.".concat(e.getMessage()));
         }
         return "redirect:/category";
     }
@@ -79,7 +79,7 @@ public class CategoryController {
             categoryService.removeCategory(id);
             redirectAttributes.addFlashAttribute("message", "Категория успешно удалена!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Ошибка при удалении категории.");
+            redirectAttributes.addFlashAttribute("message", "Ошибка при удалении категории.".concat(e.getMessage()));
         }
         return "redirect:/category"; // Возвращает имя шаблона HTML для редактирования
     }
