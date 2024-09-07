@@ -6,13 +6,13 @@ import com.stock.aziano.dto.WarehouseDto;
 import java.util.List;
 
 public interface ProductService {
-    public List<ProductDto> getWarehouses();
+    public List<ProductDto> getProducts();
 
-    public void addWarehouse(ProductDto productDto);
+    public void addProduct(ProductDto productDto);
 
-    public ProductDto getWarehouseById(Long id);
+    public ProductDto getProductById(Long id);
 
-    public void updateWarehouse(ProductDto productDto);
+    public void updateProduct(ProductDto productDto);
 
-    public void removeWarehouse(Long id);
+    public void removeProduct(Long id);
 }

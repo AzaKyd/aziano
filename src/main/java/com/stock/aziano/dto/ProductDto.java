@@ -1,16 +1,18 @@
 package com.stock.aziano.dto;
 
+import lombok.*;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDto {
-    private Long productId;
+    private Long id;
     private String productCode;
     private String barcode;
     private String name;
     private Long categoryId;
     private Double costPrice;
     private Double sellingPrice;
-
 }
