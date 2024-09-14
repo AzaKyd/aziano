@@ -1,6 +1,5 @@
 package com.stock.aziano.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

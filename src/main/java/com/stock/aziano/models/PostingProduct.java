@@ -15,11 +15,15 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "facility_product")
-public class FacilityProduct {
+@Table(name = "posting_product")
+public class PostingProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "posting_id", nullable = false)
+    private Posting posting;
 
     @ManyToOne
     @JoinColumn(name = "facility_id", nullable = false)
@@ -40,4 +44,7 @@ public class FacilityProduct {
 
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
+
+    @Column(length = 1000)  // Указываем максимальную длину описания
+    private String description; // Поле для описания продукта
 }
