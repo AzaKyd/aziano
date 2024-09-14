@@ -1,19 +1,17 @@
 package com.stock.aziano.service;
 
-import com.stock.aziano.dto.CategoryDto;
-import com.stock.aziano.dto.WarehouseDto;
-import com.stock.aziano.models.Warehouse;
+import com.stock.aziano.dto.FacilityDto;
 
 import java.util.List;
 
 public interface FacilityService {
-    public List<WarehouseDto> getWarehouses();
+    public List<FacilityDto> getFacilities();
 
-    public void addWarehouse(WarehouseDto category);
+    public void addFacility(FacilityDto category);
 
-    public WarehouseDto getWarehouseById(Long id);
+    public FacilityDto getFacilityById(Long id);
 
-    public void updateWarehouse(WarehouseDto categoryDto);
+    public void updateFacility(FacilityDto categoryDto);
 
-    public void removeWarehouse(Long id);
+    public void removeFacility(Long id);
 }

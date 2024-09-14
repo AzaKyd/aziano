@@ -2,9 +2,7 @@ package com.stock.aziano.controller;
 
 import com.stock.aziano.dto.CategoryDto;
 import com.stock.aziano.dto.ProductDto;
-import com.stock.aziano.dto.WarehouseDto;
 import com.stock.aziano.exception.DataIsUniqueException;
-import com.stock.aziano.exception.ResourceNotFoundException;
 import com.stock.aziano.mappers.ProductMapper;
 import com.stock.aziano.service.CategoryService;
 import com.stock.aziano.service.ProductService;
@@ -13,13 +11,11 @@ import com.stock.aziano.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

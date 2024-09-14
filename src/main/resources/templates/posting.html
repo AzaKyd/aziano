@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="wrapper">
+
+  <div th:replace="~{fragments/nav :: nav}"></div>
+  <div class="main-panel">
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="container">
+      <div class="page-inner">
+        <div class="page-header">
+          <h3 class="fw-bold mb-3">Оприходование</h3>
+        </div>
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="d-flex align-items-center">
+                  <a
+                          th:href="@{/posting/add}"
+                          class="btn btn-primary btn-round ms-auto"
+                  >
+                    <i class="fa fa-plus"></i>
+                    Добавить оприходование
+                  </a>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Modal -->
+
+                <div class="table-responsive">
+                  <table
+                          id="add-row"
+                          class="display table table-striped table-hover"
+                  >
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Колличество</th>
+                      <th>Дата</th>
+                      <th style="width: 10%">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="posting : ${postings}">
+                      <td th:text="${posting.id}"></td>
+                      <td th:text="${posting.quantity}"></td>
+                      <td>Edinburgh</td>
+                      <td>
+                        <div class="form-button-action">
+                          <a
+                                  th:href="@{posting/edit/{id}(id=${posting.id})}"
+                                  type="button"
+                                  data-bs-toggle="tooltip"
+                                  title=""
+                                  class="btn btn-link btn-primary btn-lg"
+                                  data-original-title="Edit Task"
+                          >
+                            <i class="fa fa-edit"></i>
+                          </a>
+                          <a
+                                  th:href="@{posting/remove/{id}(id=${posting.id})}"
+                                  type="button"
+                                  data-bs-toggle="tooltip"
+                                  title=""
+                                  class="btn btn-link btn-danger"
+                                  data-original-title="Remove"
+                          >
+                            <i class="fa fa-times"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+  </div>
+
+
+</div>
+<div th:replace="~{fragments/script :: script}">
+
+</div>
+</body>
+</html>

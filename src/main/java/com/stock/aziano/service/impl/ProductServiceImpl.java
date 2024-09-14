@@ -5,18 +5,15 @@ import com.stock.aziano.exception.DataIsUniqueException;
 import com.stock.aziano.exception.ResourceNotFoundException;
 import com.stock.aziano.mappers.ProductMapper;
 import com.stock.aziano.models.Product;
-import com.stock.aziano.models.Warehouse;
 import com.stock.aziano.repository.ProductRepository;
 import com.stock.aziano.service.ProductService;
 import com.stock.aziano.utils.ImageUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

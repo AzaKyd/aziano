@@ -1,7 +1,6 @@
 package com.stock.aziano.controller;
 
-import com.stock.aziano.dto.CategoryDto;
-import com.stock.aziano.dto.WarehouseDto;
+import com.stock.aziano.dto.FacilityDto;
 import com.stock.aziano.exception.DataIsUniqueException;
 import com.stock.aziano.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -26,8 +24,8 @@ public class FacilityController {
 
     @GetMapping("")
     public String facilities(Model model) {
-        List<WarehouseDto> warehouses = facilityService.getWarehouses();
-        model.addAttribute("facilities", warehouses);
+        List<FacilityDto> facilities = facilityService.getFacilities();
+        model.addAttribute("facilities", facilities);
         return "facility";
     }
 
@@ -37,9 +35,9 @@ public class FacilityController {
     }
 
     @PostMapping("/add")
-    public String saveFacility(@ModelAttribute("facility") WarehouseDto warehouseDto, RedirectAttributes redirectAttributes) {
+    public String saveFacility(@ModelAttribute("facility") FacilityDto facilityDto, RedirectAttributes redirectAttributes) {
         try {
-            facilityService.addWarehouse(warehouseDto);
+            facilityService.addFacility(facilityDto);
             redirectAttributes.addFlashAttribute("message", "Склад успешно сохранен успешно сохранена!");
             return "redirect:/facility";
         } catch (DataIsUniqueException e) {
@@ -50,16 +48,16 @@ public class FacilityController {
 
     @GetMapping("/edit/{id}")
     public String editFacility(@PathVariable("id") Long id, Model model) {
-        WarehouseDto categoryDto = facilityService.getWarehouseById(id);
+        FacilityDto categoryDto = facilityService.getFacilityById(id);
         model.addAttribute("facility", categoryDto);
         return "/forms/facility/edit-facility";
     }
 
     @PostMapping("/update")
-    public String updateFacility( @ModelAttribute("warehouseDto") WarehouseDto warehouseDto,
+    public String updateFacility( @ModelAttribute("warehouseDto") FacilityDto facilityDto,
                                   RedirectAttributes redirectAttributes) {
         try {
-            facilityService.updateWarehouse(warehouseDto);
+            facilityService.updateFacility(facilityDto);
             redirectAttributes.addFlashAttribute("message", "Склад успешно обновлен!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", "Ошибка при обновлении склада.".concat(e.getMessage()));
@@ -70,7 +68,7 @@ public class FacilityController {
     @GetMapping("/remove/{id}")
     public String removeFacility(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
-            facilityService.removeWarehouse(id);
+            facilityService.removeFacility(id);
             redirectAttributes.addFlashAttribute("message", "Склад успешно удален!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", "Ошибка при удалении Склада.".concat(e.getMessage()));
