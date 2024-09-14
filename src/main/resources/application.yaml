@@ -1,4 +1,9 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 5MB
   datasource:
     url: jdbc:postgresql://localhost:5432/aziano
     username: postgres
@@ -7,10 +12,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate.default_schema: aziano
   flyway:
     enabled: false
     locations: classpath:db/migration
     baseline-on-migrate: true
-    schemas: public
+    schemas: aziano
   thymeleaf:
     cache: false

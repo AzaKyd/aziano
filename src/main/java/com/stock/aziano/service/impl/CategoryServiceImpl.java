@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void addCategory(CategoryDto categoryDto) {
         // Проверка на уникальность
-        if (categoryRepository.existsByCategoryName(categoryDto.getCategoryName())) {
+        if (categoryRepository.existsByName(categoryDto.getName())) {
             throw new DataIsUniqueException("Категория с таким именем уже существует");
         }
         Category category = categoryMapper.toEntity(categoryDto);
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(categoryDto.getId())
                 .orElseThrow(() -> new RuntimeException("Категория не найдена"));
 
-        category.setCategoryName(categoryDto.getCategoryName());
+        category.setName(categoryDto.getName());
         categoryRepository.save(category);
     }
 

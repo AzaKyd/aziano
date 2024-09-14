@@ -64,7 +64,7 @@
                     <tbody>
                     <tr th:each="category : ${categories}">
                       <td th:text="${category.id}"></td>
-                      <td th:text="${category.categoryName}"></td>
+                      <td th:text="${category.name}"></td>
                       <td>
                         <div class="form-button-action">
                           <a
@@ -109,7 +109,7 @@
 <div th:replace="~{fragments/script :: script}">
 </div>
 
-<p th:if="${message}" id="custom-notify-message" th:text="${message}"></p>
+<p th:if="${message}" id="custom-notify-message" th:text="${message}" style="display: none"></p>
 
 <script th:if="${message}">
   $(document).ready(function () {

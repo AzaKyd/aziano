@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +19,8 @@ public class Category {
     private Long id;
 
     @NonNull
-    @Column(name = "category_name", nullable = false, unique = true)
-    private String categoryName;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)

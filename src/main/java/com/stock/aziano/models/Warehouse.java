@@ -2,24 +2,21 @@ package com.stock.aziano.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "warehouses")
 public class Warehouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @NonNull
     @Column(name = "name", nullable = false)
@@ -37,5 +34,4 @@ public class Warehouse {
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY)
     private List<Sale> sales;
 
-    // Getters and Setters
 }

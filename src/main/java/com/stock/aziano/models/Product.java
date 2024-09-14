@@ -1,13 +1,11 @@
 package com.stock.aziano.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stock.aziano.utils.BarcodeGenerator;
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,11 +19,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
+
     @Column(name = "product_code", nullable = false, unique = true)
     private String productCode;
 
-    @NonNull
+
     @Column(name = "barcode", nullable = false, unique = true)
     private String barcode;
 
@@ -37,6 +35,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
 
     @NonNull
     @Column(name = "cost_price", nullable = false)
@@ -75,7 +74,10 @@ public class Product {
         if (this.productCode == null || this.productCode.isEmpty()) {
             this.productCode = String.format("%05d", this.getId());
         }
+        if (this.barcode == null || this.barcode.isEmpty()) {
+            this.barcode = BarcodeGenerator.generateBarcode();
+        }
     }
 
-    // Getters and Setters
+   // Getters and Setters
 }

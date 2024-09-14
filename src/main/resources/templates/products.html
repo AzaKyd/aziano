@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head"></head>
+<head th:replace="~{fragments/head :: head}"></head>
   <body>
     <div class="wrapper">
 
-      <div th:replace="fragments/nav :: nav"></div>
+      <div th:replace="~{fragments/nav :: nav}"></div>
       <div class="main-panel">
-        <div th:replace="fragments/header :: header"></div>
+        <div th:replace="~{fragments/header :: header}"></div>
 
         <div class="container">
           <div class="page-inner">
@@ -28,7 +28,7 @@
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#">Datatables</a>
+                  <a href="#">Товары</a>
                 </li>
               </ul>
             </div>
@@ -38,104 +38,17 @@
                 <div class="card">
                   <div class="card-header">
                     <div class="d-flex align-items-center">
-                      <h4 class="card-title">Add Row</h4>
-                      <button
+                      <a
+                              th:href="@{/products/add}"
                         class="btn btn-primary btn-round ms-auto"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addRowModal"
                       >
                         <i class="fa fa-plus"></i>
-                        Add Row
-                      </button>
+                        Добавить товар
+                      </a>
                     </div>
                   </div>
                   <div class="card-body">
-                    <!-- Modal -->
-                    <div
-                      class="modal fade"
-                      id="addRowModal"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-hidden="true"
-                    >
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header border-0">
-                            <h5 class="modal-title">
-                              <span class="fw-mediumbold"> New</span>
-                              <span class="fw-light"> Row </span>
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <p class="small">
-                              Create a new row using this form, make sure you
-                              fill them all
-                            </p>
-                            <form>
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <div class="form-group form-group-default">
-                                    <label>Name</label>
-                                    <input
-                                      id="addName"
-                                      type="text"
-                                      class="form-control"
-                                      placeholder="fill name"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-md-6 pe-0">
-                                  <div class="form-group form-group-default">
-                                    <label>Position</label>
-                                    <input
-                                      id="addPosition"
-                                      type="text"
-                                      class="form-control"
-                                      placeholder="fill position"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group form-group-default">
-                                    <label>Office</label>
-                                    <input
-                                      id="addOffice"
-                                      type="text"
-                                      class="form-control"
-                                      placeholder="fill office"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer border-0">
-                            <button
-                              type="button"
-                              id="addRowButton"
-                              class="btn btn-primary"
-                            >
-                              Add
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-danger"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
 
                     <div class="table-responsive">
                       <table
@@ -144,20 +57,35 @@
                       >
                         <thead>
                           <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th style="width: 10%">Action</th>
+                            <th>ID</th>
+                            <th>Наименование</th>
+                            <th>Код</th>
+                            <th>Штрих-код</th>
+                            <th>Категория</th>
+                            <th>Себистоимость</th>
+                            <th>Цена</th>
+                            <th>Описание</th>
+                            <th>Картинка</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
+                          <tr th:each="product: ${products}">
+                            <td th:text="${product.id}"></td>
+                            <td th:text="${product.name}"></td>
+                            <td th:text="${product.productCode}"></td>
+                            <td th:text="${product.barcode}"></td>
+                            <td th:text="${product.categoryId}"></td>
+                            <td th:text="${product.costPrice}"></td>
+                            <td th:text="${product.sellingPrice}"></td>
+                            <td th:text="${product.description}"></td>
                             <td>
-                              <div class="form-button-action">
-                                <button
+                                <img th:src="@{${product.imageUrl}}" width="100" alt="Одежда" class="imagecheck-image">
+                            </td>
+                            <td>
+                              <a class="form-button-action">
+                                <a
+                                        th:href="@{products/edit/{id}(id=${product.id})}"
                                   type="button"
                                   data-bs-toggle="tooltip"
                                   title=""
@@ -165,8 +93,9 @@
                                   data-original-title="Edit Task"
                                 >
                                   <i class="fa fa-edit"></i>
-                                </button>
-                                <button
+                                </a>
+                                <a
+                                  th:href="@{products/remove/{id}(id=${product.id})}"
                                   type="button"
                                   data-bs-toggle="tooltip"
                                   title=""
@@ -174,8 +103,8 @@
                                   data-original-title="Remove"
                                 >
                                   <i class="fa fa-times"></i>
-                                </button>
-                              </div>
+                                </a>
+                              </a>
                             </td>
                           </tr>
                         </tbody>
@@ -188,13 +117,49 @@
           </div>
         </div>
 
-        <footer th:replace="fragments/footer :: footer"></footer>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
       </div>
 
 
     </div>
-    <div th:replace="fragments/script :: script">
+    <div th:replace="~{fragments/script :: script}">
 
     </div>
+
+    <p th:if="${message}" id="custom-notify-message" th:text="${message}" style="display: none"></p>
+
+    <script th:if="${message}">
+      $(document).ready(function () {
+        var placementFrom = "bottom";
+        var placementAlign = "right";
+        var state = "success";
+        var style = "withicon";
+        var content = {};
+
+        content.message = $("#custom-notify-message").text();
+        if(content.message.includes("Ошибка")){
+          state = "warning"
+        }
+        content.title = "Уведомление";
+        if (style == "withicon") {
+          content.icon = "fa fa-bell";
+        } else {
+          content.icon = "none";
+        }
+        content.url = "index.html";
+        content.target = "_blank";
+
+        $.notify(content, {
+          type: state,
+          placement: {
+            from: placementFrom,
+            align: placementAlign,
+          },
+          time: 1000,
+          delay: 20000, // Уведомление будет закрыто через 5 секунд
+          autoHide: true, // Автоматическое скрытие
+        });
+      });
+    </script>
   </body>
 </html>

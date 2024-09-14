@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,18 +24,12 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    List<CategoryDto> categories = new ArrayList<>();
     @GetMapping("")
     public String categories(Model model) {
-        List<CategoryDto> categories = categoryService.getCategories();
+        categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
         return "category";
-    }
-
-    @GetMapping("/notification")
-    public String notification(Model model) {
-        List<CategoryDto> categories = categoryService.getCategories();
-        model.addAttribute("categories", categories);
-        return "notifications";
     }
 
     @GetMapping("/add")
