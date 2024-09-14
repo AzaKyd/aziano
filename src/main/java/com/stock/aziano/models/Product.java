@@ -45,24 +45,6 @@ public class Product {
     @Column(name = "selling_price", nullable = false)
     private Double sellingPrice;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "sale_product",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "sale_id", referencedColumnName = "id")
-    )
-    private List<Sale> sales;
-
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "entry_product",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "stock_entry_id", referencedColumnName = "id")
-    )
-    private List<StockEntry> stockEntries;
-
     @Column(length = 1000)  // Указываем длину строки для хранения URL
     private String imageUrl; // Поле для URL-адреса изображения
 

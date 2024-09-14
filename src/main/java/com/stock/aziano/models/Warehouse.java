@@ -26,12 +26,4 @@ public class Warehouse {
     @Column(name = "location", nullable = false)
     private String location;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StockEntry> stockEntries;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY)
-    private List<Sale> sales;
-
 }

@@ -19,19 +19,6 @@ public class StockEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "entry_product",
-            joinColumns = @JoinColumn(name = "stock_entry_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
-    )
-    private List<Product> products;
-
-    @NonNull
-    @ManyToOne
-    @JoinColumn(name = "warehouse_id", nullable = false)
-    private Warehouse warehouse;
-
     @NonNull
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

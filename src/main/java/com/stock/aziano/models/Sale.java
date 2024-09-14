@@ -19,19 +19,9 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "sale_product",
-            joinColumns = @JoinColumn(name = "sale_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
-    )
-    private List<Product> products;
-
-    @NonNull
-    @ManyToOne
-    @JoinColumn(name = "warehouse_id", nullable = false)
-    private Warehouse warehouse;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
     @NonNull
     @Column(name = "quantity", nullable = false)
