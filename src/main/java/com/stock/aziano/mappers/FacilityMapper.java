@@ -1,20 +1,20 @@
 package com.stock.aziano.mappers;
 
-import com.stock.aziano.dto.WarehouseDto;
-import com.stock.aziano.models.Warehouse;
+import com.stock.aziano.dto.FacilityDto;
+import com.stock.aziano.models.Facility;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface WarehouseMapper {
+public interface FacilityMapper {
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "location", source = "location")
-    Warehouse toEntity(WarehouseDto warehouse);
+    Facility toEntity(FacilityDto facilityDto);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "location", source = "location")
-    WarehouseDto toDto(Warehouse warehouse);
+    FacilityDto toDto(Facility facility);
 }
