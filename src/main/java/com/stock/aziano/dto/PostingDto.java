@@ -1,5 +1,6 @@
 package com.stock.aziano.dto;
 
+import com.stock.aziano.models.Facility;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 public class PostingDto {
     private Long id;
+    private Facility facility;
     private Integer quantity;
     private BigInteger totalSum;
     private LocalDateTime entryDate;
