@@ -5032,6 +5032,7 @@ label.error {
 
 .imagecheck-image {
   max-width: 100%;
+  opacity: 1;
   transition: .3s opacity; }
   .imagecheck-image:first-child {
     border-top-left-radius: 2px;

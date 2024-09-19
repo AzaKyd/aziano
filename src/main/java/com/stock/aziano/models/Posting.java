@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +26,13 @@ public class Posting {
     @Column(name = "total_sum")
     private BigInteger totalSum;
 
+    @ManyToOne
+    @JoinColumn(name="facility_id", nullable = false)
+    private Facility facility;
+
     @Column(name = "posting_date", nullable = false)
     private LocalDateTime postingDate;
+
+    @Column(length = 1000)
+    private String description;
 }

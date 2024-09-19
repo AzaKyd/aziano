@@ -3,12 +3,17 @@ package com.stock.aziano.controller;
 import com.stock.aziano.dto.CategoryDto;
 import com.stock.aziano.dto.ProductDto;
 import com.stock.aziano.exception.DataIsUniqueException;
+import com.stock.aziano.exception.ResourceNotFoundException;
 import com.stock.aziano.mappers.ProductMapper;
 import com.stock.aziano.service.CategoryService;
 import com.stock.aziano.service.ProductService;
 import com.stock.aziano.utils.BarcodeGenerator;
 import com.stock.aziano.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,23 +25,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductMapper productMapper;
+
     private final CategoryService categoryService;
 
     @Autowired
     public ProductController(ProductService productService,
-                             ProductMapper productMapper,
                              CategoryService categoryService)
     {
         this.productService = productService;
-        this.productMapper = productMapper;
         this.categoryService = categoryService;
     }
 
@@ -45,6 +50,25 @@ public class ProductController {
         List<ProductDto> products = productService.getProducts();
         model.addAttribute("products", products);
         return "products";
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
+        List<ProductDto> products = productService.getProducts(); // Получение списка всех товаров из базы данных
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/product-price")
+    public ResponseEntity<Map<String, Object>> getProductPrice(@RequestParam Long productId) {
+        Double price = productService.getProductById(productId).getSellingPrice();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("price", price);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        return ResponseEntity.ok().headers(headers).body(response);
     }
 
     @GetMapping("/add")

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
@@ -37,14 +38,9 @@ public class PostingProduct {
     private BigInteger quantity;
 
     @Column(name = "cost", nullable = false)
-    private BigInteger cost;
+    private BigDecimal cost;
 
     @Column(name = "total_cost", nullable = false)
-    private BigInteger totalCost;
+    private BigDecimal totalCost;
 
-    @Column(name = "created", nullable = false)
-    private LocalDateTime created;
-
-    @Column(length = 1000)  // Указываем максимальную длину описания
-    private String description; // Поле для описания продукта
 }
