@@ -70,17 +70,5 @@ public class PostingController {
 
         return "redirect:/posting"; // Перенаправление после сохранения
     }
-
-    public class PostingProductListDto {
-        private List<PostingProductDto> items;
-
-        public List<PostingProductDto> getItems() {
-            return items;
-        }
-
-        public void setItems(List<PostingProductDto> items) {
-            this.items = items;
-        }
-    }
 }
 

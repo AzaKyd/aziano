@@ -24,7 +24,7 @@
 
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6 col-lg-4">
+                                        <div class="col-md-6 col-lg-3">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                 <label for="facility">Склад</label>
@@ -41,7 +41,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-lg-4">
+                                        <div class="col-md-6 col-lg-3">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="description">Описание</label>
@@ -49,6 +49,22 @@
                                                 </div>
 
 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="entryDate">Дата ввода</label>
+                                                    <input type="date" class="form-control" id="entryDate" name="entryDate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="totalSum">Общая сумма</label>
+                                                    <input type="number"  class="form-control input-full" id="totalSum" name="totalSum" placeholder="Общая сумма" readonly/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -68,10 +84,20 @@
                                 </div>
                                 <div id="items">
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="quantity">Общее колличество</label>
+                                                <input type="number"  class="form-control input-full" id="quantity" name="quantity" placeholder="Общее колличество" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
 
                     <div class="card-action">
                         <button type="button" onclick="addItem()" class="btn btn-success">Добавить товар</button>
@@ -120,13 +146,13 @@
                 </div>
                 <div class="col-md-6 col-lg-2">
                     <div class="form-group">
-                        <input type="number" class="form-control input-full" name="items[${itemIndex}].cost" placeholder="Цена" required/>
+                        <input type="number" class="form-control input-full" name="items[${itemIndex}].cost" placeholder="Цена" required disabled/>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="form-group">
-                        <input type="number" class="form-control input-full" name="items[${itemIndex}].totalCost" placeholder="Сумма" required  step="0.01" min="0"/>
-                    </div>
+                        <input type="number" class="form-control input-full" name="items[${itemIndex}].totalCost" placeholder="Сумма" required disabled step="0.01" min="0" oninput="calculateTotal()"/>
+                   </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
@@ -142,8 +168,8 @@
 
     function removeItem(button) {
         button.closest('.item').remove();
+        calculateTotal();
     }
-
     function loadProducts(container) {
         fetch('/products/products')
             .then(response => {
@@ -211,6 +237,45 @@
 
         const totalCost = quantity * unitPrice;
         totalCostInput.value = totalCost.toFixed(2);
+        // Обновим общую сумму
+        calculateTotal();
+    }
+
+</script>
+
+<script>
+    // Получаем текущую дату
+    var today = new Date().toISOString().split('T')[0];
+    // Устанавливаем дату по умолчанию
+    document.getElementById("entryDate").value = today;
+</script>
+
+<script>
+    function calculateTotal() {
+        let totalSum = 0;
+        // Получаем все поля с именем, соответствующим items[x].totalCost
+        const totalCostFields = document.querySelectorAll('input[name^="items"][name$="totalCost"]');
+
+        // Суммируем значения
+        totalCostFields.forEach(function(field) {
+            const value = parseFloat(field.value) || 0; // Если поле пустое, берём 0
+            totalSum += value;
+        });
+
+        // Обновляем поле общей суммы
+        document.getElementById("totalSum").value = totalSum.toFixed(2); // Устанавливаем общую сумму с двумя знаками после запятой
+
+
+        // Функция для обновления общей суммы количества
+        let totalQuantity = 0;
+        // Находим все поля с количеством
+        document.querySelectorAll('input[name^="items"][name$="quantity"]').forEach(function(field) {
+            const value = parseFloat(field.value) || 0; // Если поле пустое, берём 0
+            totalQuantity += value;
+        });
+
+        // Обновляем поле общей суммы количества
+        document.getElementById("quantity").value = totalQuantity;
     }
 </script>
 </body>

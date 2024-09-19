@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Posting {
     private Facility facility;
 
     @Column(name = "posting_date", nullable = false)
-    private LocalDateTime postingDate;
+    private LocalDate postingDate;
 
     @Column(length = 1000)
     private String description;
