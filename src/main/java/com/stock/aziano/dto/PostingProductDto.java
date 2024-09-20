@@ -27,4 +27,6 @@ public class PostingProductDto {
 
     private BigDecimal totalCost;
 
+    private String productName;
+
 }

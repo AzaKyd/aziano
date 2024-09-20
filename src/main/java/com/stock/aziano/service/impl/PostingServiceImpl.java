@@ -2,6 +2,7 @@ package com.stock.aziano.service.impl;
 
 import com.stock.aziano.dto.PostingDto;
 import com.stock.aziano.dto.PostingProductDto;
+import com.stock.aziano.exception.ResourceNotFoundException;
 import com.stock.aziano.mappers.FacilityProductMapper;
 import com.stock.aziano.mappers.PostingMapper;
 import com.stock.aziano.mappers.PostingProductMapper;
@@ -13,6 +14,7 @@ import com.stock.aziano.repository.FacilityProductRepository;
 import com.stock.aziano.repository.PostingProductRepository;
 import com.stock.aziano.repository.PostingRepository;
 import com.stock.aziano.service.PostingService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,7 @@ public class PostingServiceImpl implements PostingService {
     }
 
     @Override
+    @Transactional
     public void addPosting(PostingDto postingDto, List<PostingProductDto> postingProducts) {
         Posting posting = postingRepository.save(postingMapper.toEntity(postingDto));
         List<PostingProduct> productsToSave = postingProducts.stream().map(postingProduct -> {
@@ -98,7 +101,9 @@ public class PostingServiceImpl implements PostingService {
 
     @Override
     public PostingDto getPostingById(Long id) {
-        return null;
+        return postingRepository.findById(id)
+                .map(postingMapper::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Posting not found with id: " + id));
     }
 
     @Override

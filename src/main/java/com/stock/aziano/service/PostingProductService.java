@@ -6,7 +6,7 @@ import com.stock.aziano.dto.PostingProductDto;
 import java.util.List;
 
 public interface PostingProductService {
-    public List<PostingProductDto> getPostingProducts();
+    public List<PostingProductDto> getPostingProducts(Long postingProductId);
 
     public void addPostingProduct(PostingProductDto postingProductDto);
 

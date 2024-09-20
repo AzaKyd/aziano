@@ -70,5 +70,14 @@ public class PostingController {
 
         return "redirect:/posting"; // Перенаправление после сохранения
     }
+
+    @GetMapping("/{id}")
+    public String postingProducts(@PathVariable("id") Long id, Model model) {
+        List<PostingProductDto> productsDto = postingProductService.getPostingProducts(id);
+        String facility = postingService.getPostingById(id).getFacility().getName();
+        model.addAttribute("facility", facility);
+        model.addAttribute("products", productsDto);
+        return "/forms/posting/products";
+    }
 }
 
