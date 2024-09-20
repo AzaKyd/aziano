@@ -21,3 +21,9 @@ spring:
     schemas: aziano
   thymeleaf:
     cache: false
+
+mapstruct:
+  defaultComponentModel: spring  # Установить Spring как компонентную модель для MapStruct
+
+lombok:
+  addLombokGeneratedAnnotation: true  # Добавить аннотацию @Generated для методов Lombok

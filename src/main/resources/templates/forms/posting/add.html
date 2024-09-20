@@ -54,8 +54,8 @@
                                         <div class="col-md-6 col-lg-3">
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="entryDate">Дата ввода</label>
-                                                    <input type="date" class="form-control" id="entryDate" name="entryDate">
+                                                    <label for="postingDate">Дата ввода</label>
+                                                    <input type="date" class="form-control" id="postingDate" name="postingDate">
                                                 </div>
                                             </div>
                                         </div>
@@ -146,12 +146,12 @@
                 </div>
                 <div class="col-md-6 col-lg-2">
                     <div class="form-group">
-                        <input type="number" class="form-control input-full" name="items[${itemIndex}].cost" placeholder="Цена" required disabled/>
+                        <input type="number" class="form-control input-full" name="items[${itemIndex}].cost" placeholder="Цена" required readonly/>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="form-group">
-                        <input type="number" class="form-control input-full" name="items[${itemIndex}].totalCost" placeholder="Сумма" required disabled step="0.01" min="0" oninput="calculateTotal()"/>
+                        <input type="number" class="form-control input-full" name="items[${itemIndex}].totalCost" placeholder="Сумма" required readonly step="0.01" min="0" oninput="calculateTotal()"/>
                    </div>
                 </div>
                 <div class="col-md-2">
@@ -245,9 +245,9 @@
 
 <script>
     // Получаем текущую дату
-    var today = new Date().toISOString().split('T')[0];
+    var today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Bishkek" });
     // Устанавливаем дату по умолчанию
-    document.getElementById("entryDate").value = today;
+    document.getElementById("postingDate").value = today;
 </script>
 
 <script>

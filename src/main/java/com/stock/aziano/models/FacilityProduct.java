@@ -2,11 +2,9 @@ package com.stock.aziano.models;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
@@ -15,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "facility_product")
 public class FacilityProduct {
     @Id
@@ -33,11 +32,8 @@ public class FacilityProduct {
     private BigInteger quantity;
 
     @Column(name = "cost", nullable = false)
-    private BigInteger cost;
+    private BigDecimal cost;
 
     @Column(name = "total_cost", nullable = false)
-    private BigInteger totalCost;
-
-    @Column(name = "created", nullable = false)
-    private LocalDateTime created;
+    private BigDecimal totalCost;
 }
