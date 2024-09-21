@@ -71,7 +71,37 @@
                             </div>
                             <div class="card-body">
                                 <!-- Modal -->
-
+                                <div
+                                        class="modal fade"
+                                        id="addRowModal"
+                                        tabindex="-1"
+                                        role="dialog"
+                                        aria-hidden="true"
+                                >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <img id="modalImage" src="" class="img-fluid" alt="Изображение">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer border-0">
+                                                <button
+                                                        id="closeButton"
+                                                        type="button"
+                                                        class="btn btn-danger"
+                                                        data-dismiss="modal"
+                                                >
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="table-responsive">
                                     <table
                                             id="add-row"
