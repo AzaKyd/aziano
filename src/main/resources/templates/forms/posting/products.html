@@ -43,11 +43,21 @@
                                             <td th:text="${product.productName}"></td>
                                             <td th:text="${product.quantity}"></td>
                                             <td th:text="${product.cost}"></td>
-                                            <td th:text="${product.totalCost}"></td>
+                                            <td th:text="${product.totalCost}" class="totalCost"></td>
 
                                         </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="totalSum">Общее колличество</label>
+                                    <input type="number"  class="form-control input-full" id="totalSum" name="totalSum" placeholder="Общее колличество" readonly/>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +73,21 @@
 </div>
 <div th:replace="~{fragments/script :: script}">
 
+
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rows = document.querySelectorAll('tbody tr');
+        let grandTotal = 0;
+
+        rows.forEach(row => {
+            const totalCost = parseFloat(row.querySelector('.totalCost').innerText) || 0; // Получаем значение totalCost
+            grandTotal += totalCost; // Суммируем общую стоимость
+        });
+
+        // Выводим общую сумму в поле ввода
+        document.getElementById('totalSum').value = grandTotal.toFixed(2); // Форматируем до двух знаков после запятой
+    });
+</script>
 </body>
 </html>

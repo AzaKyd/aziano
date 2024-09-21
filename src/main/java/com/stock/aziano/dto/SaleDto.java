@@ -3,6 +3,7 @@ package com.stock.aziano.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,5 +13,7 @@ public class SaleDto {
     private Long warehouseId;
     private Integer quantity;
     private LocalDateTime saleDate;
-    private Double sellingPrice;
+    private BigDecimal sellingPrice;
+    private BigDecimal discount;
+    private boolean cash;
 }
