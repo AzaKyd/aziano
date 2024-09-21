@@ -1,5 +1,6 @@
 package com.stock.aziano.models;
 
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,24 +24,27 @@ public class Sale {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @NonNull
+    @NotNull
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @NonNull
+    @NotNull
     @Column(name = "sale_date", nullable = false)
     private LocalDateTime saleDate;
 
-    @NonNull
+    @NotNull
     @Column(name = "selling_price", nullable = false)
     private BigDecimal sellingPrice;
 
-    @NonNull
+    @NotNull
     @Column(name = "cash", nullable = false)
     private boolean cash;
 
     @Column(name = "discount")
     private BigDecimal discount;
+
+    @Column(name = "total")
+    private BigDecimal total;
 
     @PrePersist
     protected void onCreate() {

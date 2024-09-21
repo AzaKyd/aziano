@@ -33,7 +33,7 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public void addSale(SaleDto saleDto) {
+    public void sell(SaleDto saleDto) {
 
     }
 

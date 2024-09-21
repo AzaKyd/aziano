@@ -1,5 +1,6 @@
 package com.stock.aziano.dto;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,6 @@ public class SaleDto {
     private LocalDateTime saleDate;
     private BigDecimal sellingPrice;
     private BigDecimal discount;
+    private BigDecimal total;
     private boolean cash;
 }

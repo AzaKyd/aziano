@@ -20,15 +20,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "product_code", nullable = false, unique = true)
     private String productCode;
-
 
     @Column(name = "barcode", nullable = false, unique = true)
     private String barcode;
 
-    @NonNull
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 

@@ -15,10 +15,149 @@
             <div class="card">
 
               <div class="card-header">
-                <div class="card-title">Товары на складе</div>
+                <div class="card-title">Таблица реализации</div>
               </div>
               <form th:action="@{/sales}" method="GET">
                 <div class="card-body">
+                  <!-- Modal -->
+                  <div
+                          class="modal fade"
+                          id="addRowModal"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h5 class="modal-title">
+                            <span class="fw-mediumbold">Продажа</span>
+                          </h5>
+                        </div>
+                        <div class="modal-body">
+                          <p class="small">
+                            Введите данные для продажи
+                          </p>
+                          <form th:action="@{./sell}" method="POST">
+                            <div class="row">
+
+                              <div class="col-sm-12">
+                                <div class="form-group form-group-default" style="background: #e8e8e8;">
+                                  <label for="name">Наименование</label>
+                                  <input
+                                          id="name"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Наименование"
+                                          readonly
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-md-6 pe-0">
+                                <div class="form-group form-group-default">
+                                  <label for="productCode">Код</label>
+                                  <input
+                                          id="productCode"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Введите код"
+                                          oninput="updateByProductCode()"
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-md-6 pe-0">
+                                <div class="form-group form-group-default">
+                                  <label for="barcode">Штрих-код</label>
+                                  <input
+                                          id="barcode"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Введите штрих-код"
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-md-6 pe-0">
+                                <div class="form-group form-group-default">
+                                  <label for="sellingPrice">Цена</label>
+                                  <input
+                                          id="sellingPrice"
+                                          type="number"
+                                          class="form-control"
+                                          placeholder="Введите цену"
+                                          min="1"
+                                          required
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                  <label for="discount">Скидка</label>
+                                  <input
+                                          id="discount"
+                                          type="number"
+                                          class="form-control"
+                                          placeholder="Введите скидку"
+                                          min="0"
+                                  />
+                                </div>
+                              </div>
+
+
+                              <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                  <label for="quantity">Колличество</label>
+                                  <input
+                                          id="quantity"
+                                          type="number"
+                                          class="form-control"
+                                          placeholder="Введите колличество"
+                                          min="1"
+                                  />
+                                </div>
+                              </div>
+
+
+                              <div class="col-md-6">
+                                <div class="form-group form-group-default"  style="background: #e8e8e8;">
+                                  <label for="total">Итого</label>
+                                  <input
+                                          id="total"
+                                          type="number"
+                                          class="form-control"
+                                          placeholder="Итого"
+                                          min="1"
+                                          readonly
+                                  />
+                                </div>
+                              </div>
+
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer border-0">
+                          <button
+                                  type="submit"
+                                  id="addRowButton"
+                                  class="btn btn-primary"
+                          >
+                            Продать
+                          </button>
+                          <button
+                                  id="closeButton"
+                                  type="button"
+                                  class="btn btn-danger"
+                                  data-dismiss="modal"
+                          >
+                            Закрыть
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-md-6 col-lg-3">
                       <div class="form-group">
@@ -51,48 +190,18 @@
             <div class="card">
               <div class="card-header">
                 <div class="d-flex align-items-center">
-                  <a
-                          th:href="@{/products/add}"
+                  <button
                           class="btn btn-primary btn-round ms-auto"
-                  >
-                    <i class="fa fa-plus"></i>
+                          data-bs-toggle="modal"
+                          data-bs-target="#addRowModal"
+                  ><i class="fa fa-plus"></i>
                     Добавить товар
-                  </a>
+                  </button>>
+
                 </div>
               </div>
               <div class="card-body">
-                <!-- Modal -->
-                <div
-                        class="modal fade"
-                        id="addRowModal"
-                        tabindex="-1"
-                        role="dialog"
-                        aria-hidden="true"
-                >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-body">
-                        <form>
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <img id="modalImage" src="" class="img-fluid" alt="Изображение">
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                      <div class="modal-footer border-0">
-                        <button
-                                id="closeButton"
-                                type="button"
-                                class="btn btn-danger"
-                                data-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
 
                 <div class="table-responsive">
                   <table
@@ -217,6 +326,49 @@
   var today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Bishkek" });
   // Устанавливаем дату по умолчанию
   document.getElementById("saleDate").value = today;
+</script>
+
+<script>
+
+  function updateByProductCode() {
+    const sellingPriceElement = document.getElementById('sellingPrice')
+
+    const productCodeElement = document.getElementById('productCode');
+    const productCode = productCodeElement.value;
+
+    if (productCode) {
+      fetch(`/products/productcode?productCode=${productCode}`)
+              .then(response => {
+                // Проверяем, что ответ имеет статус OK и тип content-type соответствует JSON
+                if (response.ok && response.headers.get('Content-Type').includes('application/json')) {
+                  return response.json();
+                } else {
+                  return response.json().then(errorData => {
+                    throw new Error(errorData.error || 'Неизвестная ошибка');
+                  });
+                }
+              })
+              .then(data => {
+                sellingPriceElement.value = data.sellingPrice || '';
+                updateTotalCost(sellingPrice);
+              })
+              .catch(error => {
+                console.error("Ошибка при получении кода товара:", error);
+                unitPriceInput.value = '';
+              });
+    } else {
+      sellingPriceElement.value = '';
+    }
+  }
+
+</script>
+<script>
+    $(document).ready(function () {
+
+    $("#closeButton").click(function () {
+      $("#addRowModal").modal("hide");
+    });
+  });
 </script>
 </body>
 </html>

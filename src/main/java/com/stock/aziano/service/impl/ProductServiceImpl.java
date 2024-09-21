@@ -107,6 +107,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductDto getProductByBarcode(String barcode) {
+        return productMapper.toDto(productRepository.findByBarcode(barcode));
+    }
+
+    @Override
+    public ProductDto getProductBy(String productCode) {
+        Product product = productRepository.findByProductCode(productCode);
+
+        if (product == null) {
+            throw new ResourceNotFoundException("Товар с кодом продукта не найден " + productCode);
+        }
+
+        return productMapper.toDto(product);
+    }
+
+    @Override
     public void updateProduct(ProductDto productDto, MultipartFile imageFile) throws IOException {
         // Ищем существующий продукт в базе данных по ID
         Optional<Product> existingProduct = productRepository.findById(productDto.getId());

@@ -84,6 +84,25 @@ public class ProductController {
         return ResponseEntity.ok().headers(headers).body(response);
     }
 
+    @GetMapping("/productcode")
+    public ResponseEntity<Map<String, Object>> getProductByProductCode(@RequestParam String productCode) {
+        Map<String, Object> response = new HashMap<>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        try {
+            ProductDto productDto = productService.getProductBy(productCode);
+            response.put("sellingPrice", productDto.getSellingPrice());
+            return ResponseEntity.ok().headers(headers).body(response);
+        } catch (ResourceNotFoundException e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(response);
+        } catch (Exception e) {
+            response.put("error", "An unexpected error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(response);
+        }
+    }
+
     @GetMapping("/add")
     public String addProduct(Model model) {
         List<CategoryDto> categories = categoryService.getCategories();

@@ -15,6 +15,10 @@ public interface ProductService {
 
     public ProductDto getProductById(Long id);
 
+    public ProductDto getProductByBarcode(String barcode);
+
+    public ProductDto getProductBy(String productCode);
+
     public void updateProduct(ProductDto productDto, MultipartFile imageFile) throws IOException;
 
     public void removeProduct(Long id);
