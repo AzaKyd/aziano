@@ -141,12 +141,12 @@
                 </div>
                 <div class="col-md-6 col-lg-2">
                     <div class="form-group">
-                        <input type="number" class="form-control input-full" name="items[${itemIndex}].quantity" placeholder="Количество" required />
+                        <input type="number" class="form-control input-full" name="items[${itemIndex}].quantity" placeholder="Количество" min="1" required />
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-2">
                     <div class="form-group">
-                        <input type="number" class="form-control input-full" name="items[${itemIndex}].cost" placeholder="Цена" required readonly/>
+                        <input type="number" class="form-control input-full" name="items[${itemIndex}].cost" placeholder="Цена" min="1" required readonly/>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">

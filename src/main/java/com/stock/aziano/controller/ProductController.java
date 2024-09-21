@@ -10,6 +10,9 @@ import com.stock.aziano.service.ProductService;
 import com.stock.aziano.utils.BarcodeGenerator;
 import com.stock.aziano.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,9 +50,18 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public String product(Model model) {
-        List<ProductDto> products = productService.getProducts();
-        model.addAttribute("products", products);
+    public String product(@RequestParam(value = "productCode", required = false) String productCode,
+                          @RequestParam(value = "barcode", required = false) String barcode,
+                          @RequestParam(value = "name", required = false) String name,
+                          @RequestParam(value = "page", defaultValue = "0") int page,
+                          @RequestParam(value = "size", defaultValue = "10") int size,
+                          Model model) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProductDto> productPage = productService.getProductsPage(productCode, barcode, name, pageable);
+
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
         return "products";
     }
 

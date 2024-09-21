@@ -5,6 +5,7 @@ import com.stock.aziano.utils.BarcodeGenerator;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -39,11 +40,11 @@ public class Product {
 
     @NonNull
     @Column(name = "cost_price", nullable = false)
-    private Double costPrice;
+    private BigDecimal costPrice;
 
     @NonNull
     @Column(name = "selling_price", nullable = false)
-    private Double sellingPrice;
+    private BigDecimal sellingPrice;
 
     @Column(length = 1000)  // Указываем длину строки для хранения URL
     private String imageUrl; // Поле для URL-адреса изображения

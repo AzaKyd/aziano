@@ -1,6 +1,7 @@
 package com.stock.aziano.controller;
 
 import com.stock.aziano.dto.FacilityDto;
+import com.stock.aziano.dto.FacilityProductDto;
 import com.stock.aziano.models.FacilityProduct;
 import com.stock.aziano.service.FacilityProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,11 @@ public class FacilityProductController {
             @RequestParam(required = false) String barcode,
             @RequestParam(required = false) String productCode,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "100") int size,
             Model model) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<FacilityProduct> productsPage = facilityProductService.getFilteredFacilityProducts(name, barcode, productCode, pageable);
+        Page<FacilityProductDto> productsPage = facilityProductService.getFilteredFacilityProducts(name, barcode, productCode, pageable);
 
         // Добавляем данные в модель для Thymeleaf
         model.addAttribute("products", productsPage.getContent());
@@ -44,10 +45,10 @@ public class FacilityProductController {
         model.addAttribute("totalPages", productsPage.getTotalPages());
         model.addAttribute("totalItems", productsPage.getTotalElements());
         model.addAttribute("pageSize", productsPage.getSize());
-        model.addAttribute("name", name);  // Чтобы сохранить параметры поиска
-        model.addAttribute("barcode", barcode);
-        model.addAttribute("productCode", productCode);
+//        model.addAttribute("name", name);  // Чтобы сохранить параметры поиска
+//        model.addAttribute("barcode", barcode);
+//        model.addAttribute("productCode", productCode);
 
-        return "products";  // Возвращаем название HTML-шаблона (products.html)
+        return "facility-product";  // Возвращаем название HTML-шаблона (products.html)
     }
 }

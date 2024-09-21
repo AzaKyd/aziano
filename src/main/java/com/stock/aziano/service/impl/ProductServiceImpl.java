@@ -7,10 +7,14 @@ import com.stock.aziano.mappers.ProductMapper;
 import com.stock.aziano.models.Product;
 import com.stock.aziano.repository.CategoryRepository;
 import com.stock.aziano.repository.ProductRepository;
+import com.stock.aziano.repository.ProductSpecification;
 import com.stock.aziano.service.ProductService;
 import com.stock.aziano.utils.ImageUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +41,36 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    public Page<ProductDto> getProductsPage(String productCode, String barcode, String name, Pageable pageable) {
+        // Создаем спецификацию для фильтрации
+        Specification<Product> spec = Specification
+                .where(ProductSpecification.hasProductName(name))
+                .and(ProductSpecification.hasBarcode(barcode))
+                .and(ProductSpecification.hasProductCode(productCode));
+
+        // Получаем страницу продуктов из репозитория по спецификации
+        Page<Product> products = productRepository.findAll(spec, pageable);
+
+        // Преобразуем каждый продукт в DTO и возвращаем результат
+        return products.map(this::convertToDto);
+    }
+
+    public ProductDto convertToDto(Product product) {
+        ProductDto dto = new ProductDto();
+        dto.setId(product.getId());
+        dto.setProductCode(product.getProductCode());
+        dto.setBarcode(product.getBarcode());
+        dto.setName(product.getName());
+        dto.setCategoryId(product.getCategory().getId());
+        dto.setCategoryName(product.getCategory().getName());
+        dto.setCostPrice(product.getCostPrice());
+        dto.setSellingPrice(product.getSellingPrice());
+        dto.setImageUrl(product.getImageUrl());
+        dto.setDescription(product.getDescription());
+        return dto;
     }
 
     @Override

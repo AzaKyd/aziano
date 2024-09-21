@@ -10,28 +10,57 @@
 
         <div class="container">
           <div class="page-inner">
-            <div class="page-header">
-              <h3 class="fw-bold mb-3">Товары</h3>
-              <ul class="breadcrumbs mb-3">
-                <li class="nav-home">
-                  <a href="#">
-                    <i class="icon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#">Tables</a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#">Товары</a>
-                </li>
-              </ul>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+
+                  <div class="card-header">
+                    <div class="card-title">Товары на складе</div>
+                  </div>
+                  <form th:action="@{/products}" method="GET">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                          <div class="form-group">
+                            <div class="form-group">
+                              <label for="name">Наименование</label>
+                              <input type="text"  class="form-control input-full" id="name" name="name" placeholder="Наименование"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                          <div class="form-group">
+                            <div class="form-group">
+                              <label for="productCode">Код продукта</label>
+                              <input type="text"  class="form-control input-full" id="productCode" name="productCode" placeholder="Код продукта"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                          <div class="form-group">
+                            <div class="form-group">
+                              <label for="barcode">Штрих-код</label>
+                              <input type="text"  class="form-control input-full" id="barcode" name="barcode" placeholder="Штрих-код"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                          <div class="form-group">
+                            <div class="form-group">
+                              <div class="card-action">
+                                <button type="submit" class="btn btn-success">Поиск</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
+
             <div class="row">
 
               <div class="col-md-12">
@@ -48,7 +77,38 @@
                     </div>
                   </div>
                   <div class="card-body">
-
+                    <!-- Modal -->
+                    <div
+                            class="modal fade"
+                            id="addRowModal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-hidden="true"
+                    >
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <form>
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <img id="modalImage" src="" class="img-fluid" alt="Изображение">
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer border-0">
+                            <button
+                                    id="closeButton"
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                     <div class="table-responsive">
                       <table
@@ -80,7 +140,12 @@
                             <td th:text="${product.sellingPrice}"></td>
                             <td th:text="${product.description}"></td>
                             <td>
-                                <img th:src="@{${product.imageUrl}}" width="100" alt="Одежда" class="imagecheck-image">
+                              <img th:src="@{${product.imageUrl}}" width="70" alt="Одежда"
+                                   style="cursor: pointer;"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#addRowModal"
+                                   th:data-image-url="${product.imageUrl}">
+
                             </td>
                             <td>
                               <a class="form-button-action">
@@ -110,6 +175,40 @@
                         </tbody>
                       </table>
                     </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6">
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_paginate paging_simple_numbers" id="basic-datatables_paginate">
+                          <ul class="pagination">
+
+                            <!-- Previous Button -->
+                            <li class="paginate_button page-item" th:classappend="${page == 0} ? 'disabled' : ''">
+                              <a th:href="@{/products(page=${page != null ? page - 1 : 0}, size=${size})}"
+                                 th:if="${page != null and page > 0}"
+                                 class="page-link">Previous</a>
+                            </li>
+
+                            <!-- Page Numbers -->
+                            <li class="paginate_button page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                th:classappend="${i == page} ? 'active' : ''">
+                              <a th:href="@{/products(page=${i}, size=${size})}"
+                                 th:text="${i + 1}"
+
+                                 class="page-link">1</a>
+                            </li>
+
+                            <!-- Next Button -->
+                            <li class="paginate_button page-item" th:classappend="${page >= totalPages - 1} ? 'disabled' : ''">
+                              <a th:href="@{/products(page=${page != null ? page + 1 : 1}, size=${size})}"
+                                 th:if="${page != null and page < totalPages - 1}"
+
+                                 class="page-link">Next</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -122,6 +221,7 @@
 
 
     </div>
+
     <div th:replace="~{fragments/script :: script}">
 
     </div>
@@ -158,6 +258,26 @@
           time: 1000,
           delay: 20000, // Уведомление будет закрыто через 5 секунд
           autoHide: true, // Автоматическое скрытие
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+
+        $("#closeButton").click(function () {
+          console.log("hide")
+          $("#addRowModal").modal("hide");
+        });
+      });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('addRowModal');
+        modal.addEventListener('show.bs.modal', function (event) {
+          const button = event.relatedTarget; // Кнопка, вызвавшая модальное окно
+          const imageUrl = button.getAttribute('data-image-url'); // Извлечение значения data-* атрибута
+          const modalImage = modal.querySelector('#modalImage');
+          modalImage.src = imageUrl; // Установка src для изображения в модальном окне
         });
       });
     </script>
