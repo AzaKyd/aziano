@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="wrapper">
+
+    <div th:replace="~{fragments/nav :: nav}"></div>
+    <div class="main-panel">
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="container">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <div class="card-title">Добавить оприходование</div>
+                            </div>
+                            <form th:action="@{./add}" method="POST">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="name">Наименование</label>
+                                                <input type="text"  class="form-control input-full" id="name" name="name" placeholder="Наименование"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="productCode">Код продукта</label>
+                                                    <input type="text"  class="form-control input-full" id="productCode" name="productCode" placeholder="Код продукта"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="barcode">Штрих-код</label>
+                                                    <input type="text"  class="form-control input-full" id="barcode" name="barcode" placeholder="Штрих-код"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <div class="card-action">
+                                                        <button type="submit" class="btn btn-success">Поиск</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Modal -->
+
+                                <div class="table-responsive">
+                                    <table
+                                            id="add-row"
+                                            class="display table table-striped table-hover"
+                                    >
+                                        <thead>
+                                        <tr>
+                                            <th>Наименование</th>
+                                            <th>Код</th>
+                                            <th>Штрих-код</th>
+                                            <th>Колличество</th>
+                                            <th>Цена</th>
+                                            <th>Сумма</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="product : ${products}">
+                                            <td th:text="${product.productName}"></td>
+                                            <td th:text="${product.productCode}"></td>
+                                            <td th:text="${product.barcode}"></td>
+                                            <td th:text="${product.quantity}"></td>
+                                            <td th:text="${product.cost}"></td>
+                                            <td th:text="${product.totalCost}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="basic-datatables_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="basic-datatables_paginate">
+                                            <ul class="pagination">
+                                                <!-- Previous Button -->
+                                                <li class="paginate_button page-item" th:classappend="${page == 0} ? 'disabled' : ''">
+                                                    <a th:href="@{(page=${page - 1}, size=${size})}"
+                                                       th:if="${page > 0}"
+                                                       aria-controls="basic-datatables"
+                                                       data-dt-idx="0"
+                                                       tabindex="0"
+                                                       class="page-link">Previous</a>
+                                                </li>
+
+                                                <!-- Page Numbers -->
+                                                <li class="paginate_button page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                                    th:classappend="${i == page} ? 'active' : ''">
+                                                    <a th:href="@{(page=${i}, size=${size})}"
+                                                       th:text="${i + 1}"
+                                                       aria-controls="basic-datatables"
+                                                       data-dt-idx="6"
+                                                       tabindex="0"
+                                                       class="page-link">1</a>
+                                                </li>
+
+                                                <!-- Next Button -->
+                                                <li class="paginate_button page-item" th:classappend="${page >= totalPages - 1} ? 'disabled' : ''">
+                                                    <a th:href="@{(page=${page + 1}, size=${size})}"
+                                                       th:if="${page < totalPages - 1}"
+                                                       aria-controls="basic-datatables"
+                                                       data-dt-idx="7"
+                                                       tabindex="0"
+                                                       class="page-link">Next</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+
+
+</div>
+<div th:replace="~{fragments/script :: script}">
+
+</div>
+</body>
+</html>

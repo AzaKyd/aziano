@@ -2,6 +2,8 @@ package com.stock.aziano.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Builder
@@ -13,8 +15,9 @@ public class ProductDto {
     private String barcode;
     private String name;
     private Long categoryId;
-    private Double costPrice;
-    private Double sellingPrice;
+    private String categoryName;
+    private BigDecimal costPrice;
+    private BigDecimal sellingPrice;
     private String imageUrl;
     private String description;
 }

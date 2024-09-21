@@ -5,6 +5,7 @@ import com.stock.aziano.exception.DataIsUniqueException;
 import com.stock.aziano.exception.ResourceNotFoundException;
 import com.stock.aziano.mappers.ProductMapper;
 import com.stock.aziano.models.Product;
+import com.stock.aziano.repository.CategoryRepository;
 import com.stock.aziano.repository.ProductRepository;
 import com.stock.aziano.service.ProductService;
 import com.stock.aziano.utils.ImageUtils;
@@ -27,11 +28,15 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    ProductServiceImpl(ProductRepository productRepository,
+                       ProductMapper productMapper,
+                       CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -39,7 +44,12 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findAll();
 
         return products.stream()
-                .map(productMapper::toDto)
+                .map(product -> {
+                    ProductDto productDto = productMapper.toDto(product);
+                    categoryRepository.findById(product.getCategory().getId())
+                            .ifPresent(category -> productDto.setCategoryName(category.getName()));
+                    return productDto;
+                })
                 .collect(Collectors.toList());
     }
 

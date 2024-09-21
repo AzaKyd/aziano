@@ -1,6 +1,5 @@
 package com.stock.aziano.dto;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,11 @@ public class FacilityProductDto {
     private Long id;
     private FacilityDto facility;
     private ProductDto product;
+    private String productName;
+    private String productCode;
+    private String barcode;
     private BigInteger quantity;
+    private BigDecimal costPrice;
     private BigDecimal cost;
     private BigDecimal totalCost;
 }

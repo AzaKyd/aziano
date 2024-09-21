@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,7 +61,7 @@ public class ProductController {
 
     @GetMapping("/product-price")
     public ResponseEntity<Map<String, Object>> getProductPrice(@RequestParam Long productId) {
-        Double price = productService.getProductById(productId).getSellingPrice();
+        BigDecimal price = productService.getProductById(productId).getSellingPrice();
 
         Map<String, Object> response = new HashMap<>();
         response.put("price", price);
