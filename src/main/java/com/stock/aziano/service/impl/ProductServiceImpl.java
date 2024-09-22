@@ -89,10 +89,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProduct(ProductDto productDto) {
-        if(productRepository.existsByName(productDto.getName())) {
+        if (productRepository.existsByName(productDto.getName())) {
             throw new DataIsUniqueException("Товар с таким именем уже существует");
         }
-        productRepository.save(productMapper.toEntity(productDto));
+
+        // Сохраняем продукт без productCode, чтобы получить id
+        Product product = productMapper.toEntity(productDto);
+        Product savedProduct = productRepository.save(product);
+
+        // Генерируем productCode на основе id
+        savedProduct.setProductCode(String.format("%05d", savedProduct.getId()));
+
+        // Сохраняем продукт снова с установленным productCode
+        productRepository.save(savedProduct);
     }
 
     @Override

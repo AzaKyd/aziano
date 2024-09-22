@@ -51,13 +51,9 @@ public class Product {
 
     @PrePersist
     private void generateProductCode() {
-        if (this.productCode == null || this.productCode.isEmpty()) {
-            this.productCode = String.format("%05d", this.getId());
-        }
         if (this.barcode == null || this.barcode.isEmpty()) {
             this.barcode = BarcodeGenerator.generateBarcode();
         }
     }
 
-   // Getters and Setters
 }

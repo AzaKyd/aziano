@@ -17,7 +17,6 @@
               <div class="card-header">
                 <div class="card-title">Таблица реализации</div>
               </div>
-              <form th:action="@{/sales}" method="GET">
                 <div class="card-body">
                   <!-- Modal -->
                   <div
@@ -28,6 +27,7 @@
                           aria-hidden="true"
                   >
                     <div class="modal-dialog" role="document">
+                      <form th:action="@{./sell}" method="POST">
                       <div class="modal-content">
                         <div class="modal-header border-0">
                           <h5 class="modal-title">
@@ -38,7 +38,7 @@
                           <p class="small">
                             Введите данные для продажи
                           </p>
-                          <form th:action="@{./sell}" method="POST">
+
                             <div class="row">
 
                               <div class="col-sm-12">
@@ -54,7 +54,7 @@
                                 </div>
                               </div>
 
-                              <div class="col-md-6 pe-0">
+                              <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-group-default">
                                   <label for="productCode">Код</label>
                                   <input
@@ -67,7 +67,7 @@
                                 </div>
                               </div>
 
-                              <div class="col-md-6 pe-0">
+                              <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-group-default">
                                   <label for="barcode">Штрих-код</label>
                                   <input
@@ -75,39 +75,13 @@
                                           type="text"
                                           class="form-control"
                                           placeholder="Введите штрих-код"
-                                  />
-                                </div>
-                              </div>
-
-                              <div class="col-md-6 pe-0">
-                                <div class="form-group form-group-default">
-                                  <label for="sellingPrice">Цена</label>
-                                  <input
-                                          id="sellingPrice"
-                                          type="number"
-                                          class="form-control"
-                                          placeholder="Введите цену"
-                                          min="1"
-                                          required
-                                  />
-                                </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                  <label for="discount">Скидка</label>
-                                  <input
-                                          id="discount"
-                                          type="number"
-                                          class="form-control"
-                                          placeholder="Введите скидку"
-                                          min="0"
+                                          onchange="updateByBarcode()"
                                   />
                                 </div>
                               </div>
 
 
-                              <div class="col-md-6">
+                              <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-group-default">
                                   <label for="quantity">Колличество</label>
                                   <input
@@ -120,23 +94,81 @@
                                 </div>
                               </div>
 
-
-                              <div class="col-md-6">
-                                <div class="form-group form-group-default"  style="background: #e8e8e8;">
-                                  <label for="total">Итого</label>
+                              <div class="col-md-6 col-sm-6">
+                                <div class="form-group form-group-default" style="background: #e8e8e8;">
+                                  <label for="sellingPrice">Цена</label>
                                   <input
-                                          id="total"
+                                          id="sellingPrice"
                                           type="number"
                                           class="form-control"
-                                          placeholder="Итого"
+                                          placeholder="Введите цену"
                                           min="1"
+                                          style="font-size: medium"
+                                          required
                                           readonly
                                   />
                                 </div>
                               </div>
 
+                              <div class="col-md-6 col-sm-6">
+                                <div class="form-group form-group-default">
+                                  <label for="discount">Скидка</label>
+                                  <input
+                                          id="discount"
+                                          type="number"
+                                          class="form-control"
+                                          placeholder="Введите скидку"
+                                          min="0"
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-md-6 col-sm-6">
+                                <div class="form-group form-group-default"  style="background: #e8e8e8;">
+                                  <label for="total">Итого</label>
+                                  <input
+                                          id="total"
+                                          type="number"
+                                          class="form-control fw-bold text-success"
+                                          min="1"
+                                          style="font-size: medium;"
+                                          readonly
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-md-6 col-sm-6">
+                                  <input
+                                          id="id"
+                                          name="id"
+                                          type="text"
+                                          class="form-control"
+                                          hidden
+                                  />
+                              </div>
+
+                              <div class="col-md-6 col-sm-6">
+                                <div class="form-check">
+                                  <input
+                                          class="form-check-input"
+                                          type="checkbox"
+                                          value="true"
+                                          id="cash"
+                                          name="cash"
+                                          checked
+                                  />
+                                  <label class="form-check-label" for="cash">
+                                    Наличные
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <input type="date" class="form-control" id="saleDate" name="saleDate" hidden>
+                              </div>
+
                             </div>
-                          </form>
+
                         </div>
                         <div class="modal-footer border-0">
                           <button
@@ -156,30 +188,34 @@
                           </button>
                         </div>
                       </div>
+                      </form>
                     </div>
                   </div>
+                  <form th:action="@{/sales}" method="GET">
                   <div class="row">
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group">
+
+                      <div class="col-md-6 col-lg-3">
                         <div class="form-group">
-                          <label for="saleDate">Дата ввода</label>
-                          <input type="date" class="form-control" id="saleDate" name="saleDate">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group">
-                        <div class="form-group">
-                          <div class="card-action">
-                            <button type="submit" class="btn btn-success">Поиск</button>
+                          <div class="form-group">
+                            <label for="saleDateSearch">Дата ввода</label>
+                            <input type="date" class="form-control" id="saleDateSearch" name="saleDateSearch">
                           </div>
                         </div>
                       </div>
-                    </div>
+                      <div class="col-md-6 col-lg-3">
+                        <div class="form-group">
+                          <div class="form-group">
+                            <div class="card-action">
+                              <button type="submit" class="btn btn-success">Поиск</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                   </div>
+                  </form>
                 </div>
-              </form>
+
             </div>
           </div>
         </div>
@@ -191,12 +227,13 @@
               <div class="card-header">
                 <div class="d-flex align-items-center">
                   <button
+                          id="startSaleButton"
                           class="btn btn-primary btn-round ms-auto"
                           data-bs-toggle="modal"
                           data-bs-target="#addRowModal"
                   ><i class="fa fa-plus"></i>
-                    Добавить товар
-                  </button>>
+                    Начать продажу
+                  </button>
 
                 </div>
               </div>
@@ -329,9 +366,35 @@
 </script>
 
 <script>
+  function updateTotal() {
+    // Получаем значения цены, количества и скидки
+    const price = parseFloat(document.getElementById("sellingPrice").value) || 0;
+    const quantity = parseFloat(document.getElementById("quantity").value) || 1;
+    const discount = parseFloat(document.getElementById("discount").value) || 0;
+
+    // Вычисляем итог с учетом скидки
+    const total = (price * quantity) - discount;
+    console.log(`Total: ${total}`); // Отладка
+    // Устанавливаем итоговое значение в поле "Итого"
+    document.getElementById("total").value = total >= 0 ? total.toFixed(2) : 0;
+
+    // Привязываем функцию обновления к полям цены, количества и скидки
+
+  }
+
+  document.getElementById("sellingPrice").addEventListener("input", updateTotal);
+  document.getElementById("quantity").addEventListener("input", updateTotal);
+  document.getElementById("discount").addEventListener("input", updateTotal);
 
   function updateByProductCode() {
-    const sellingPriceElement = document.getElementById('sellingPrice')
+
+    const sellingPriceElement = document.getElementById('sellingPrice');
+    const productNameElement = document.getElementById('name');
+    const productBarcode = document.getElementById('barcode');
+    const productId = document.getElementById('id');
+    const discountElement = document.getElementById('discount');
+    const totalElement = document.getElementById('total');
+    const quantityElement = document.getElementById('quantity');
 
     const productCodeElement = document.getElementById('productCode');
     const productCode = productCodeElement.value;
@@ -350,14 +413,84 @@
               })
               .then(data => {
                 sellingPriceElement.value = data.sellingPrice || '';
-                updateTotalCost(sellingPrice);
+                productNameElement.value = data.name || '';
+                productBarcode.value = data.barcode || '';
+                productId.value = data.id || '';
+                quantityElement.value = 1;
+                updateTotal();
               })
               .catch(error => {
-                console.error("Ошибка при получении кода товара:", error);
-                unitPriceInput.value = '';
+                console.error("Ошибка при получении товара:", error);
+                sellingPriceElement.value = '';
+                discountElement.value = '';
+                productId.value = '';
+                productNameElement.value = '';
+                totalElement.value = '';
+                productBarcode.value = '';
+                quantityElement.value = '';
+                updateTotal();
               });
     } else {
       sellingPriceElement.value = '';
+      discountElement.value = '';
+      productId.value = '';
+      productNameElement.value = '';
+      totalElement.value = '';
+      productBarcode.value = '';
+    }
+  }
+
+  function updateByBarcode() {
+    const sellingPriceElement = document.getElementById('sellingPrice');
+    const productNameElement = document.getElementById('name');
+    const productCodeElement = document.getElementById('productCode');
+    const productId = document.getElementById('id');
+    const discountElement = document.getElementById('discount');
+    const totalElement = document.getElementById('total');
+    const quantityElement = document.getElementById('quantity');
+
+
+    const productBarcodeElement = document.getElementById('barcode');
+    const barcode = productBarcodeElement.value;
+
+    if (barcode) {
+      fetch(`/products/barcode?barcode=${barcode}`)
+              .then(response => {
+                // Проверяем, что ответ имеет статус OK и тип content-type соответствует JSON
+                if (response.ok && response.headers.get('Content-Type').includes('application/json')) {
+                  return response.json();
+                } else {
+                  return response.json().then(errorData => {
+                    throw new Error(errorData.error || 'Неизвестная ошибка');
+                  });
+                }
+              })
+              .then(data => {
+                sellingPriceElement.value = data.sellingPrice || '';
+                productNameElement.value = data.name || '';
+                productCodeElement.value = data.productCode || '';
+                productId.value = data.id || '';
+                quantityElement.value = 1;
+                updateTotal();
+              })
+              .catch(error => {
+                console.error("Ошибка при получении товара:", error);
+                sellingPriceElement.value = '';
+                discountElement.value = '';
+                productId.value = '';
+                productNameElement.value = '';
+                totalElement.value = '';
+                productCodeElement.value = '';
+                quantityElement.value = '';
+                updateTotal();
+              });
+    } else {
+      sellingPriceElement.value = '';
+      discountElement.value = '';
+      productId.value = '';
+      productNameElement.value = '';
+      totalElement.value = '';
+      productCodeElement.value = '';
     }
   }
 
@@ -368,6 +501,44 @@
     $("#closeButton").click(function () {
       $("#addRowModal").modal("hide");
     });
+  });
+</script>
+
+<script>
+  // Добавляем обработчик события для кнопки "Начать продажу"
+  document.getElementById('startSaleButton').addEventListener('click', function() {
+    // Находим все инпуты внутри нужной формы
+    const inputs = document.querySelectorAll('#addRowModal input');
+
+    // Очищаем все инпуты
+    inputs.forEach(input => {
+      if (input.type === 'text' || input.type === 'number') {
+        input.value = '';  // Очищаем значение
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Функция для обновления итоговой суммы
+    function updateTotal() {
+      // Получаем значения цены, количества и скидки
+      const price = parseFloat(document.getElementById("sellingPrice").value) || 0;
+      const quantity = parseFloat(document.getElementById("quantity").value) || 1;
+      const discount = parseFloat(document.getElementById("discount").value) || 0;
+
+      // Вычисляем итог с учетом скидки
+      const total = (price * quantity) - discount;
+      console.log(`Total: ${total}`); // Отладка
+      // Устанавливаем итоговое значение в поле "Итого"
+      document.getElementById("total").value = total >= 0 ? total.toFixed(2) : 0;
+    }
+
+    // Привязываем функцию обновления к полям цены, количества и скидки
+    document.getElementById("sellingPrice").addEventListener("input", updateTotal);
+    document.getElementById("quantity").addEventListener("input", updateTotal);
+    document.getElementById("discount").addEventListener("input", updateTotal);
   });
 </script>
 </body>

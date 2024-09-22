@@ -93,6 +93,31 @@ public class ProductController {
         try {
             ProductDto productDto = productService.getProductBy(productCode);
             response.put("sellingPrice", productDto.getSellingPrice());
+            response.put("name", productDto.getName());
+            response.put("barcode", productDto.getBarcode());
+            response.put("id", productDto.getId());
+            return ResponseEntity.ok().headers(headers).body(response);
+        } catch (ResourceNotFoundException e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(response);
+        } catch (Exception e) {
+            response.put("error", "An unexpected error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(response);
+        }
+    }
+
+    @GetMapping("/barcode")
+    public ResponseEntity<Map<String, Object>> getProductByBarcode(@RequestParam String barcode) {
+        Map<String, Object> response = new HashMap<>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        try {
+            ProductDto productDto = productService.getProductByBarcode(barcode);
+            response.put("sellingPrice", productDto.getSellingPrice());
+            response.put("name", productDto.getName());
+            response.put("productCode", productDto.getProductCode());
+            response.put("id", productDto.getId());
             return ResponseEntity.ok().headers(headers).body(response);
         } catch (ResourceNotFoundException e) {
             response.put("error", e.getMessage());
