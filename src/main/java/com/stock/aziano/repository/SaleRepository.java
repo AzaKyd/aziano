@@ -15,6 +15,6 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     Optional<Sale> findByProductId(long id);
 
     @Query("SELECT s FROM Sale s WHERE s.saleDate BETWEEN :startDate AND :endDate")
-    List<Sale> findSalesForDay(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    List<Sale> findSalesForPeriod(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
 }

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="wrapper">
+
+    <div th:replace="~{fragments/nav :: nav}"></div>
+    <div class="main-panel">
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="container">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <div class="card-title">Таблица реализации</div>
+                            </div>
+                            <div class="card-body">
+
+                                <form th:action="@{/statistic}" method="GET">
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="fromDate">Дата с</label>
+                                                    <input type="date" class="form-control" id="fromDate" name="fromDate" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="toDate">Дата по</label>
+                                                    <input type="date" class="form-control" id="toDate" name="toDate" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <div class="card-action">
+                                                        <button type="submit" class="btn btn-success">Поиск</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table
+                                        id="add-row"
+                                        class="display table table-striped table-hover"
+                                    >
+                                        <thead>
+                                        <tr>
+                                            <th>Дата</th>
+                                            <th>Себистоимость</th>
+                                            <th>Доход</th>
+                                            <th>Прибыль</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="report: ${reports}">
+
+                                            <td th:text="${report.saleDate}"></td>
+                                            <td th:text="${report.totalCostPrice}"></td>
+                                            <td th:text="${report.totalSellingPrice}"></td>
+                                            <td th:text="${report.netProfit}"></td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="totalCostPrice">Общая себистомость</label>
+                                    <input type="text"  class="form-control input-full" id="totalCostPrice" name="totalCostPrice"  readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="totalSellingPrice">Общее наличка</label>
+                                    <input type="text"  class="form-control input-full" id="totalSellingPrice" name="totalSellingPrice"  readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="totalProfit">ИТОГО:</label>
+                                    <input type="text"  class="form-control input-full" id="totalProfit" name="totalProfit" disabled readonly/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+
+
+</div>
+
+<div th:replace="~{fragments/script :: script}">
+
+</div>
+
+<p th:if="${message}" id="custom-notify-message" th:text="${message}" style="display: none"></p>
+
+<script th:if="${message}">
+    $(document).ready(function () {
+        var placementFrom = "bottom";
+        var placementAlign = "right";
+        var state = "success";
+        var style = "withicon";
+        var content = {};
+
+        content.message = $("#custom-notify-message").text();
+        if(content.message.includes("Ошибка")){
+            state = "warning"
+        }
+        content.title = "Уведомление";
+        if (style == "withicon") {
+            content.icon = "fa fa-bell";
+        } else {
+            content.icon = "none";
+        }
+        content.url = "index.html";
+        content.target = "_blank";
+
+        $.notify(content, {
+            type: state,
+            placement: {
+                from: placementFrom,
+                align: placementAlign,
+            },
+            time: 1000,
+            delay: 20000, // Уведомление будет закрыто через 5 секунд
+            autoHide: true, // Автоматическое скрытие
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let totalCostPrice = 0;
+        let totalSellingPrice = 0;
+        let totalNetProfit = 0;
+
+        // Получаем все строки таблицы
+        const rows = document.querySelectorAll("#add-row tbody tr");
+
+        rows.forEach(row => {
+            // Получаем значения себестоимости, дохода и прибыли из текущей строки
+            const costPrice = parseFloat(row.cells[1].textContent) || 0;
+            const sellingPrice = parseFloat(row.cells[2].textContent) || 0;
+            const netProfit = parseFloat(row.cells[3].textContent) || 0;
+
+            // Суммируем значения
+            totalCostPrice += costPrice;
+            totalSellingPrice += sellingPrice;
+            totalNetProfit += netProfit;
+        });
+        console.log("test");
+        // Отображаем суммированные значения
+        document.getElementById("totalCostPrice").value = totalCostPrice.toFixed(2);
+        document.getElementById("totalSellingPrice").value = totalSellingPrice.toFixed(2);
+        document.getElementById("totalProfit").value = totalNetProfit.toFixed(2);
+    });
+</script>
+</body>
+</html>

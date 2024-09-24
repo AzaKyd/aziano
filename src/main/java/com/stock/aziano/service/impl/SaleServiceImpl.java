@@ -27,7 +27,7 @@ public class SaleServiceImpl implements SaleService {
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(23, 59, 59);
 
-        return saleRepository.findSalesForDay(startOfDay, endOfDay).
+        return saleRepository.findSalesForPeriod(startOfDay, endOfDay).
                 stream().
                 map(saleMapper::toDto).
                 toList();
