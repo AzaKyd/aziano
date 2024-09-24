@@ -81,7 +81,7 @@ public class PostingServiceImpl implements PostingService {
 
                     if (existingEntity != null) {
                         // Если продукт уже существует, обновляем его количество и стоимость
-                        existingEntity.setQuantity(existingEntity.getQuantity().add(facilityProductDto.getQuantity()));
+                        existingEntity.setQuantity(existingEntity.getQuantity() + facilityProductDto.getQuantity());
                         existingEntity.setTotalCost(existingEntity.getTotalCost().add(facilityProductDto.getTotalCost()));
                         return existingEntity; // Возвращаем обновленный объект
                     } else {

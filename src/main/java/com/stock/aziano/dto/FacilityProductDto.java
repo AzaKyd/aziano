@@ -16,7 +16,7 @@ public class FacilityProductDto {
     private String productCode;
     private String barcode;
     private String imageUrl;
-    private BigInteger quantity;
+    private Integer quantity;
     private BigDecimal costPrice;
     private BigDecimal cost;
     private BigDecimal totalCost;

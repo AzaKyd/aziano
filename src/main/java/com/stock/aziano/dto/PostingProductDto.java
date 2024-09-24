@@ -21,7 +21,7 @@ public class PostingProductDto {
 
     private Product product;
 
-    private BigInteger quantity;
+    private Integer quantity;
 
     private BigDecimal  cost;
 

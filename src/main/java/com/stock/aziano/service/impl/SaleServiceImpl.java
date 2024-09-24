@@ -18,7 +18,7 @@ public class SaleServiceImpl implements SaleService {
     @Autowired
     private SaleRepository saleRepository;
     @Autowired
-    private SaleMapper SaleMapper;
+    private SaleMapper saleMapper;
 
 
     @Override
@@ -28,13 +28,14 @@ public class SaleServiceImpl implements SaleService {
         String formattedDate = today.format(formatter);
         return saleRepository.findAllBySaleDate(LocalDate.now(ZoneId.of("Asia/Bishkek"))).
                 stream().
-                map(SaleMapper::toDto).
+                map(saleMapper::toDto).
                 toList();
     }
 
     @Override
     public void sell(SaleDto saleDto) {
-
+        var test = saleMapper.toEntity(saleDto);
+        saleRepository.save(saleMapper.toEntity(saleDto));
     }
 
     @Override

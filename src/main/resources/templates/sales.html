@@ -27,7 +27,7 @@
                           aria-hidden="true"
                   >
                     <div class="modal-dialog" role="document">
-                      <form th:action="@{./sell}" method="POST">
+                      <form th:action="@{/sales}" method="POST">
                       <div class="modal-content">
                         <div class="modal-header border-0">
                           <h5 class="modal-title">
@@ -59,6 +59,7 @@
                                   <label for="productCode">Код</label>
                                   <input
                                           id="productCode"
+                                          name="productCode"
                                           type="text"
                                           class="form-control"
                                           placeholder="Введите код"
@@ -72,10 +73,11 @@
                                   <label for="barcode">Штрих-код</label>
                                   <input
                                           id="barcode"
+                                          name="barcode"
                                           type="text"
                                           class="form-control"
                                           placeholder="Введите штрих-код"
-                                          onchange="updateByBarcode()"
+                                          oninput="updateByBarcode()"
                                   />
                                 </div>
                               </div>
@@ -86,6 +88,7 @@
                                   <label for="quantity">Колличество</label>
                                   <input
                                           id="quantity"
+                                          name="quantity"
                                           type="number"
                                           class="form-control"
                                           placeholder="Введите колличество"
@@ -99,6 +102,7 @@
                                   <label for="sellingPrice">Цена</label>
                                   <input
                                           id="sellingPrice"
+                                          name="sellingPrice"
                                           type="number"
                                           class="form-control"
                                           placeholder="Введите цену"
@@ -115,6 +119,7 @@
                                   <label for="discount">Скидка</label>
                                   <input
                                           id="discount"
+                                          name="discount"
                                           type="number"
                                           class="form-control"
                                           placeholder="Введите скидку"
@@ -128,6 +133,7 @@
                                   <label for="total">Итого</label>
                                   <input
                                           id="total"
+                                          name="total"
                                           type="number"
                                           class="form-control fw-bold text-success"
                                           min="1"
@@ -140,10 +146,9 @@
                               <div class="col-md-6 col-sm-6">
                                   <input
                                           id="id"
-                                          name="id"
-                                          type="text"
+                                          name="productId"
+                                          type="hidden"
                                           class="form-control"
-                                          hidden
                                   />
                               </div>
 
@@ -164,7 +169,7 @@
                               </div>
 
                               <div class="col-md-6">
-                                <input type="date" class="form-control" id="saleDate" name="saleDate" hidden>
+                                <input type="hidden" id="saleDate" name="saleDate" value="">
                               </div>
 
                             </div>
@@ -361,8 +366,13 @@
 <script>
   // Получаем текущую дату
   var today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Bishkek" });
-  // Устанавливаем дату по умолчанию
-  document.getElementById("saleDate").value = today;
+  var currentTime = new Date().toLocaleTimeString("en-GB", {
+    timeZone: "Asia/Bishkek",
+    hour12: false
+  });
+
+  // Установить значение поля saleDate в формате yyyy-MM-ddTHH:mm:ss
+  document.getElementById("saleDate").value = today + "T" + currentTime;
 </script>
 
 <script>
@@ -541,5 +551,8 @@
     document.getElementById("discount").addEventListener("input", updateTotal);
   });
 </script>
+
+
+
 </body>
 </html>

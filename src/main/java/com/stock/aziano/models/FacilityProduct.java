@@ -28,7 +28,7 @@ public class FacilityProduct {
     private Product product;
 
     @Column(name = "quantity", nullable = false)
-    private BigInteger quantity;
+    private Integer quantity;
 
     @Column(name = "cost", nullable = false)
     private BigDecimal cost;

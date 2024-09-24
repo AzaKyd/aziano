@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 public class SaleDto {
     private Long productId;
-    private Long warehouseId;
+    private ProductDto product;
     private Integer quantity;
     private LocalDateTime saleDate;
     private BigDecimal sellingPrice;
