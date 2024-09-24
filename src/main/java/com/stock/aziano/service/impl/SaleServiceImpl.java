@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -22,11 +23,11 @@ public class SaleServiceImpl implements SaleService {
 
 
     @Override
-    public List<SaleDto> getSales() {
-        LocalDate today = LocalDate.now(ZoneId.of("Asia/Bishkek"));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  // Указываем нужный формат
-        String formattedDate = today.format(formatter);
-        return saleRepository.findAllBySaleDate(LocalDate.now(ZoneId.of("Asia/Bishkek"))).
+    public List<SaleDto> getSales(LocalDate today) {
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(23, 59, 59);
+
+        return saleRepository.findSalesForDay(startOfDay, endOfDay).
                 stream().
                 map(saleMapper::toDto).
                 toList();
@@ -34,7 +35,6 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public void sell(SaleDto saleDto) {
-        var test = saleMapper.toEntity(saleDto);
         saleRepository.save(saleMapper.toEntity(saleDto));
     }
 

@@ -37,6 +37,10 @@ public class Sale {
     private BigDecimal sellingPrice;
 
     @NotNull
+    @Column(name = "cost_price", nullable = false)
+    private BigDecimal costPrice;
+
+    @NotNull
     @Column(name = "cash", nullable = false)
     private boolean cash;
 

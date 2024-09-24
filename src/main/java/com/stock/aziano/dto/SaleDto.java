@@ -15,6 +15,7 @@ public class SaleDto {
     private Integer quantity;
     private LocalDateTime saleDate;
     private BigDecimal sellingPrice;
+    private BigDecimal costPrice;
     private BigDecimal discount;
     private BigDecimal total;
     private boolean cash;

@@ -18,6 +18,37 @@
                 <div class="card-title">Таблица реализации</div>
               </div>
                 <div class="card-body">
+                  <!-- IMAGE Modal -->
+                  <div
+                          class="modal fade"
+                          id="showImage"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-body">
+
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <img id="modalImage" src="" class="img-fluid" alt="Изображение">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer border-0">
+                          <button
+                                  id="closeImageButton"
+                                  type="button"
+                                  class="btn btn-danger"
+                                  data-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <!-- Modal -->
                   <div
                           class="modal fade"
@@ -144,15 +175,6 @@
                               </div>
 
                               <div class="col-md-6 col-sm-6">
-                                  <input
-                                          id="id"
-                                          name="productId"
-                                          type="hidden"
-                                          class="form-control"
-                                  />
-                              </div>
-
-                              <div class="col-md-6 col-sm-6">
                                 <div class="form-check">
                                   <input
                                           class="form-check-input"
@@ -170,6 +192,19 @@
 
                               <div class="col-md-6">
                                 <input type="hidden" id="saleDate" name="saleDate" value="">
+                              </div>
+
+                              <div class="col-md-6 col-sm-6">
+                                <input
+                                        id="id"
+                                        name="productId"
+                                        type="hidden"
+                                        class="form-control"
+                                />
+                              </div>
+
+                              <div class="col-md-6">
+                                <input type="hidden" id="costPrice" name="costPrice" value="">
                               </div>
 
                             </div>
@@ -256,59 +291,64 @@
                       <th>Наименование</th>
                       <th>Код</th>
                       <th>Штрих-код</th>
-                      <th>Категория</th>
-                      <th>Себистоимость</th>
-                      <th>Цена</th>
-                      <th>Описание</th>
+                      <th>Дата</th>
+                      <th>Форма олптаы</th>
                       <th>Картинка</th>
-                      <th>Action</th>
+                      <th>Цена</th>
+                      <th>Скидка</th>
+                      <th>Итого</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="product: ${products}">
-                      <td th:text="${product.id}"></td>
-                      <td th:text="${product.name}"></td>
-                      <td th:text="${product.productCode}"></td>
-                      <td th:text="${product.barcode}"></td>
-                      <td th:text="${product.categoryName}"></td>
-                      <td th:text="${product.costPrice}"></td>
-                      <td th:text="${product.sellingPrice}"></td>
-                      <td th:text="${product.description}"></td>
+                    <tr th:each="sale: ${sales}">
+                      <td th:text="1"></td>
+                      <td th:text="${sale.product.name}"></td>
+                      <td th:text="${sale.product.productCode}"></td>
+                      <td th:text="${sale.product.barcode}"></td>
+                      <td th:text="${sale.saleDate}"></td>
+                      <td th:text="${sale.cash ? 'Оплата наличкой' : 'Оплата переводом'}"></td>
                       <td>
-                        <img th:src="@{${product.imageUrl}}" width="70" alt="Одежда"
+                        <img th:src="@{${sale.product.imageUrl}}" width="70" alt="Одежда"
                              style="cursor: pointer;"
                              data-bs-toggle="modal"
-                             data-bs-target="#addRowModal"
-                             th:data-image-url="${product.imageUrl}">
+                             data-bs-target="#showImage"
+                             th:data-image-url="${sale.product.imageUrl}">
 
                       </td>
-                      <td>
-                        <a class="form-button-action">
-                          <a
-                                  th:href="@{products/edit/{id}(id=${product.id})}"
-                                  type="button"
-                                  data-bs-toggle="tooltip"
-                                  title=""
-                                  class="btn btn-link btn-primary btn-lg"
-                                  data-original-title="Edit Task"
-                          >
-                            <i class="fa fa-edit"></i>
-                          </a>
-                          <a
-                                  th:href="@{products/remove/{id}(id=${product.id})}"
-                                  type="button"
-                                  data-bs-toggle="tooltip"
-                                  title=""
-                                  class="btn btn-link btn-danger"
-                                  data-original-title="Remove"
-                          >
-                            <i class="fa fa-times"></i>
-                          </a>
-                        </a>
-                      </td>
+                      <td th:text="${sale.sellingPrice}"></td>
+                      <td th:text="${sale.discount}"></td>
+                      <td th:text="${sale.total}"></td>
                     </tr>
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group">
+                <div class="form-group">
+                  <label for="totalTransactions">Общее переводы</label>
+                  <input type="number"  class="form-control input-full" id="totalTransactions" name="totalTransactions" disabled readonly/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group">
+                <div class="form-group">
+                  <label for="totalCash">Общее наличка</label>
+                  <input type="number"  class="form-control input-full" id="totalCash" name="totalCash" disabled readonly/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group">
+                <div class="form-group">
+                  <label for="totalSum">ИТОГО:</label>
+                  <input type="number"  class="form-control input-full" id="totalSum" name="totalSum" disabled readonly/>
                 </div>
               </div>
             </div>
@@ -405,6 +445,7 @@
     const discountElement = document.getElementById('discount');
     const totalElement = document.getElementById('total');
     const quantityElement = document.getElementById('quantity');
+    const costPriceElement = document.getElementById('costPrice');
 
     const productCodeElement = document.getElementById('productCode');
     const productCode = productCodeElement.value;
@@ -423,6 +464,7 @@
               })
               .then(data => {
                 sellingPriceElement.value = data.sellingPrice || '';
+                costPriceElement.value = data.costPrice || '';
                 productNameElement.value = data.name || '';
                 productBarcode.value = data.barcode || '';
                 productId.value = data.id || '';
@@ -438,6 +480,7 @@
                 totalElement.value = '';
                 productBarcode.value = '';
                 quantityElement.value = '';
+                costPriceElement.value = '';
                 updateTotal();
               });
     } else {
@@ -447,6 +490,7 @@
       productNameElement.value = '';
       totalElement.value = '';
       productBarcode.value = '';
+      costPriceElement.value = '';
     }
   }
 
@@ -458,6 +502,7 @@
     const discountElement = document.getElementById('discount');
     const totalElement = document.getElementById('total');
     const quantityElement = document.getElementById('quantity');
+    const costPriceElement = document.getElementById('costPrice');
 
 
     const productBarcodeElement = document.getElementById('barcode');
@@ -477,6 +522,7 @@
               })
               .then(data => {
                 sellingPriceElement.value = data.sellingPrice || '';
+                costPriceElement.value = data.costPrice || '';
                 productNameElement.value = data.name || '';
                 productCodeElement.value = data.productCode || '';
                 productId.value = data.id || '';
@@ -492,6 +538,7 @@
                 totalElement.value = '';
                 productCodeElement.value = '';
                 quantityElement.value = '';
+                costPriceElement.value = '';
                 updateTotal();
               });
     } else {
@@ -501,6 +548,7 @@
       productNameElement.value = '';
       totalElement.value = '';
       productCodeElement.value = '';
+      costPriceElement.value = '';
     }
   }
 
@@ -553,6 +601,69 @@
 </script>
 
 
+<script>
+  $(document).ready(function () {
 
+    $("#closeButton").click(function () {
+      console.log("hide")
+      $("#addRowModal").modal("hide");
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('addRowModal');
+    modal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget; // Кнопка, вызвавшая модальное окно
+      const imageUrl = button.getAttribute('data-image-url'); // Извлечение значения data-* атрибута
+      const modalImage = modal.querySelector('#modalImage');
+      modalImage.src = imageUrl; // Установка src для изображения в модальном окне
+    });
+  });
+</script>
+
+
+<script>
+  $(document).ready(function () {
+
+    $("#closeImageButton").click(function () {
+      $("#showImage").modal("hide");
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('showImage');
+    modal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget; // Кнопка, вызвавшая модальное окно
+      const imageUrl = button.getAttribute('data-image-url'); // Извлечение значения data-* атрибута
+      const modalImage = modal.querySelector('#modalImage');
+      modalImage.src = imageUrl; // Установка src для изображения в модальном окне
+    });
+  });
+</script>
+
+<script th:inline="javascript">
+  /* Преобразуем список продаж в JavaScript массив */
+  var sales = /*[[${sales}]]*/ [];
+
+  document.addEventListener("DOMContentLoaded", function() {
+    let totalCash = 0;
+    let totalTransfers = 0;
+
+    sales.forEach(function(sale) {
+      if (sale.cash) {
+        totalCash += sale.total; // Сумма наличных
+      } else {
+        totalTransfers += sale.total; // Сумма переводов
+      }
+    });
+
+    let totalSum = totalCash + totalTransfers; // Общая сумма
+
+    // Обновляем значения полей ввода
+    document.getElementById("totalTransactions").value = totalTransfers.toFixed(2);
+    document.getElementById("totalCash").value = totalCash.toFixed(2);
+    document.getElementById("totalSum").value = totalSum.toFixed(2);
+  });
+</script>
 </body>
 </html>

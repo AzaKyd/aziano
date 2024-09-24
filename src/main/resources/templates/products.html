@@ -77,10 +77,10 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <!-- Modal -->
+                    <!-- IMAGE Modal -->
                     <div
                             class="modal fade"
-                            id="addRowModal"
+                            id="showImage"
                             tabindex="-1"
                             role="dialog"
                             aria-hidden="true"
@@ -88,13 +88,12 @@
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-body">
-                            <form>
+
                               <div class="row">
                                 <div class="col-sm-12">
                                   <img id="modalImage" src="" class="img-fluid" alt="Изображение">
                                 </div>
                               </div>
-                            </form>
                           </div>
                           <div class="modal-footer border-0">
                             <button
@@ -143,7 +142,7 @@
                               <img th:src="@{${product.imageUrl}}" width="70" alt="Одежда"
                                    style="cursor: pointer;"
                                    data-bs-toggle="modal"
-                                   data-bs-target="#addRowModal"
+                                   data-bs-target="#showImage"
                                    th:data-image-url="${product.imageUrl}">
 
                             </td>
@@ -263,13 +262,12 @@
       $(document).ready(function () {
 
         $("#closeButton").click(function () {
-          console.log("hide")
-          $("#addRowModal").modal("hide");
+          $("#showImage").modal("hide");
         });
       });
 
       document.addEventListener('DOMContentLoaded', function () {
-        const modal = document.getElementById('addRowModal');
+        const modal = document.getElementById('showImage');
         modal.addEventListener('show.bs.modal', function (event) {
           const button = event.relatedTarget; // Кнопка, вызвавшая модальное окно
           const imageUrl = button.getAttribute('data-image-url'); // Извлечение значения data-* атрибута

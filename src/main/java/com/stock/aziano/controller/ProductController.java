@@ -93,6 +93,7 @@ public class ProductController {
         try {
             ProductDto productDto = productService.getProductBy(productCode);
             response.put("sellingPrice", productDto.getSellingPrice());
+            response.put("costPrice", productDto.getCostPrice());
             response.put("name", productDto.getName());
             response.put("barcode", productDto.getBarcode());
             response.put("id", productDto.getId());
@@ -115,6 +116,7 @@ public class ProductController {
         try {
             ProductDto productDto = productService.getProductByBarcode(barcode);
             response.put("sellingPrice", productDto.getSellingPrice());
+            response.put("costPrice", productDto.getCostPrice());
             response.put("name", productDto.getName());
             response.put("productCode", productDto.getProductCode());
             response.put("id", productDto.getId());
