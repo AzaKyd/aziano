@@ -3,6 +3,7 @@ package com.stock.aziano.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -53,13 +55,13 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails admin = User.withUsername("1234")
-                .password(passwordEncoder().encode("1234"))
+        UserDetails admin = User.withUsername("Azamat")
+                .password(passwordEncoder().encode("Test240923"))
                 .roles("ADMIN")
                 .build();
 
-        UserDetails employee = User.withUsername("123")
-                .password(passwordEncoder().encode("123"))
+        UserDetails employee = User.withUsername("user")
+                .password(passwordEncoder().encode("user"))
                 .roles("EMPLOYEE")
                 .build();
 
