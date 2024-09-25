@@ -175,20 +175,44 @@
                               </div>
 
                               <div class="col-md-6 col-sm-6">
-                                <div class="form-check">
-                                  <input
-                                          class="form-check-input"
-                                          type="checkbox"
-                                          value="true"
-                                          id="cash"
-                                          name="cash"
-                                          checked
-                                  />
-                                  <label class="form-check-label" for="cash">
-                                    Наличные
-                                  </label>
+                                <div class="form-group">
+                                  <label>Форма оплаты</label><br />
+                                  <div class="d-flex">
+                                    <div class="form-check">
+                                      <input
+                                              class="form-check-input"
+                                              type="radio"
+                                              name="cash"
+                                              id="paymentMethodCash"
+                                              value="true"
+                                              required
+                                      />
+                                      <label
+                                              class="form-check-label"
+                                              for="paymentMethodCash"
+                                      >
+                                        Наличка
+                                      </label>
+                                    </div>
+                                    <div class="form-check">
+                                      <input
+                                              class="form-check-input"
+                                              type="radio"
+                                              name="cash"
+                                              id="paymentMethodTransfer"
+                                              value="false"
+                                      />
+                                      <label
+                                              class="form-check-label"
+                                              for="paymentMethodTransfer"
+                                      >
+                                        Перевод
+                                      </label>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
+
 
                               <div class="col-md-6">
                                 <input type="hidden" id="saleDate" name="saleDate" value="">
@@ -306,7 +330,7 @@
                       <td th:text="${sale.product.productCode}"></td>
                       <td th:text="${sale.product.barcode}"></td>
                       <td th:text="${sale.saleDate}"></td>
-                      <td th:text="${sale.cash ? 'Оплата наличкой' : 'Оплата переводом'}"></td>
+                      <td th:text="${sale.cash ? 'Наличка' : 'Перевод'}"></td>
                       <td>
                         <img th:src="@{${sale.product.imageUrl}}" width="70" alt="Одежда"
                              style="cursor: pointer;"
