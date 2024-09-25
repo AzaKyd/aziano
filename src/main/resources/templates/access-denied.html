@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="wrapper">
+
+    <div th:replace="~{fragments/nav :: nav}"></div>
+    <div class="main-panel">
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="container">
+            <div class="page-inner">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Нужны права администратора</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+
+
+</div>
+
+<div th:replace="~{fragments/script :: script}">
+
+</div>
+
+<p th:if="${message}" id="custom-notify-message" th:text="${message}" style="display: none"></p>
+
+<script th:if="${message}">
+    $(document).ready(function () {
+        var placementFrom = "bottom";
+        var placementAlign = "right";
+        var state = "success";
+        var style = "withicon";
+        var content = {};
+
+        content.message = $("#custom-notify-message").text();
+        if(content.message.includes("Ошибка")){
+            state = "warning"
+        }
+        content.title = "Уведомление";
+        if (style == "withicon") {
+            content.icon = "fa fa-bell";
+        } else {
+            content.icon = "none";
+        }
+        content.url = "index.html";
+        content.target = "_blank";
+
+        $.notify(content, {
+            type: state,
+            placement: {
+                from: placementFrom,
+                align: placementAlign,
+            },
+            time: 1000,
+            delay: 20000, // Уведомление будет закрыто через 5 секунд
+            autoHide: true, // Автоматическое скрытие
+        });
+    });
+</script>
+</body>
+</html>

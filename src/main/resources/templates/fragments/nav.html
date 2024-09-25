@@ -2,7 +2,7 @@
     <div class="sidebar-logo">
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
-            <a th:href="@{/}" class="logo">
+            <a th:href="@{/sales}" class="logo">
                 <h3 style="color: white; font-size: 25px; font-weight: bold;">AZIANO</h3>
             </a>
             <div class="nav-toggle">
@@ -23,7 +23,7 @@
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
                 <li class="nav-item">
-                    <a th:href="@{/statistic}">
+                    <a th:href="@{/statistic}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                         <i class="far fa-chart-bar"></i>
                         <p>Статистика</p>
                     </a>

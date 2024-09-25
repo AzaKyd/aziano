@@ -165,8 +165,13 @@
                                   title=""
                                   class="btn btn-link btn-danger"
                                   data-original-title="Remove"
+
                                 >
                                   <i class="fa fa-times"></i>
+                                </a>
+                                <!-- Кнопка для скачивания PDF -->
+                                <a th:href="@{/products/download-pdf/{id}(id=${product.id})}" class="btn btn-primary">
+                                  <i class="fa fa-download"></i> Скачать PDF
                                 </a>
                               </a>
                             </td>

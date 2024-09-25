@@ -9,7 +9,9 @@ import com.stock.aziano.service.CategoryService;
 import com.stock.aziano.service.ProductService;
 import com.stock.aziano.utils.BarcodeGenerator;
 import com.stock.aziano.utils.ImageUtils;
+import com.stock.aziano.utils.PdfGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -223,5 +227,24 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("message", "Ошибка при удалении товара.".concat(e.getMessage()));
         }
         return "redirect:/products";
+    }
+
+    @GetMapping("/download-pdf/{id}")
+    public ResponseEntity<InputStreamResource> downloadPdf(@PathVariable("id") Long id) throws IOException {
+        // Получаем данные товара по ID
+        ProductDto product = productService.getProductById(id);
+
+        // Генерация PDF с помощью утилитного класса
+        ByteArrayOutputStream byteArrayOutputStream = PdfGenerator.generateProductPdf(product);
+
+        // Подготавливаем ResponseEntity для отправки PDF
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=product_" + product.getId() + ".pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(byteArrayInputStream));
     }
 }

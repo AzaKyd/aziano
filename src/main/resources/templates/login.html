@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div class="wrapper">
+
+
+
+
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="page-inner w-100">
+
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <div class="card-title">Магазин AZIANO</div>
+                            <div class="card-title">Вход</div>
+                        </div>
+                        <div class="card-body">
+                            <form action="/login" method="post">
+                                <div class="form-group">
+                                    <label for="username">Логин</label>
+                                    <input type="text" class="form-control" id="username" name="username" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Пароль</label>
+                                    <input type="password" class="form-control" id="password" name="password" required />
+                                </div>
+                                <div class="form-group text-center">
+                                    <button type="submit" class="btn btn-primary">Войти</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+<div th:replace="~{fragments/script :: script}">
+
+</div>
+
+<p th:if="${message}" id="custom-notify-message" th:text="${message}" style="display: none"></p>
+
+<script th:if="${message}">
+    $(document).ready(function () {
+        var placementFrom = "bottom";
+        var placementAlign = "right";
+        var state = "success";
+        var style = "withicon";
+        var content = {};
+
+        content.message = $("#custom-notify-message").text();
+        if(content.message.includes("Ошибка")){
+            state = "warning"
+        }
+        content.title = "Уведомление";
+        if (style == "withicon") {
+            content.icon = "fa fa-bell";
+        } else {
+            content.icon = "none";
+        }
+        content.url = "index.html";
+        content.target = "_blank";
+
+        $.notify(content, {
+            type: state,
+            placement: {
+                from: placementFrom,
+                align: placementAlign,
+            },
+            time: 1000,
+            delay: 20000, // Уведомление будет закрыто через 5 секунд
+            autoHide: true, // Автоматическое скрытие
+        });
+    });
+</script>
+</body>
+</html>

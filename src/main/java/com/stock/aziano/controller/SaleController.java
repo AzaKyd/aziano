@@ -12,6 +12,7 @@ import com.stock.aziano.service.FacilityService;
 import com.stock.aziano.service.ProductService;
 import com.stock.aziano.service.SaleService;
 import com.stock.aziano.service.impl.SaleServiceImpl;
+import com.stock.aziano.utils.TelegramNotificationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,6 +75,11 @@ public class SaleController {
         ProductDto productDto = productService.getProductById(saleDto.getProductId());
         saleDto.setProduct(productDto);
         saleService.sell(saleDto);
+
+        // После успешной продажи отправляем сообщение в Telegram
+        TelegramNotificationService telegramService = new TelegramNotificationService();
+        telegramService.sendSaleNotification(saleDto.getTotal().toString());  // Предполагается, что в saleDto хранится сумма продажи
+
         return "redirect:/sales";
     }
 }
