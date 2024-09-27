@@ -132,6 +132,7 @@
             <div class="row">
                 <div class="col-md-6 col-lg-3">
                     <div class="form-group">
+                        <input type="text" oninput="filterProducts(this)" placeholder="Поиск товара" class="form-control-lg" />
                         <select class="form-select form-control-lg" name="items[${itemIndex}].product.id" onchange="updatePrice(this)">
                             <option value="" disabled selected>Выберите товар</option>
                             ${products.map(product => `
@@ -193,6 +194,35 @@
             .catch(error => {
                 console.error('Ошибка при загрузке товаров:', error);
             });
+    }
+
+    function filterProducts(input) {
+        const query = input.value.toLowerCase();
+        const select = input.nextElementSibling; // Получаем следующий элемент (select)
+
+        if (!select) {
+            console.error('Select element not found.');
+            return;
+        }
+
+        // Получаем все опции из селекта
+        const options = Array.from(select.querySelectorAll('option'));
+
+        // Фильтруем продукты и добавляем соответствующие опции
+        const filteredOptions = options.filter(option => option.textContent.toLowerCase().includes(query));
+
+        // Очищаем дропдаун, оставляя только первую опцию
+        select.innerHTML = '<option value="" disabled selected>Выберите товар</option>';
+
+        // Добавляем отфильтрованные опции обратно в селект
+        filteredOptions.forEach(option => {
+            select.appendChild(option);
+        });
+
+        // Если нет отфильтрованных опций, можно, например, показать предупреждение
+        if (filteredOptions.length === 0) {
+            console.warn('Нет товаров, соответствующих вашему запросу.');
+        }
     }
 
     function updatePrice(selectElement) {
