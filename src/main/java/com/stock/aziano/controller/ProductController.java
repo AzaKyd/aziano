@@ -15,6 +15,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -58,9 +59,9 @@ public class ProductController {
                           @RequestParam(value = "barcode", required = false) String barcode,
                           @RequestParam(value = "name", required = false) String name,
                           @RequestParam(value = "page", defaultValue = "0") int page,
-                          @RequestParam(value = "size", defaultValue = "10") int size,
+                          @RequestParam(value = "size", defaultValue = "100") int size,
                           Model model) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         Page<ProductDto> productPage = productService.getProductsPage(productCode, barcode, name, pageable);
 
         model.addAttribute("products", productPage.getContent());

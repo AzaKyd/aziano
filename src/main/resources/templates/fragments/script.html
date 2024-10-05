@@ -73,12 +73,10 @@
             }
         }
 
-        // Обработка событий для всех input
         const inputs = document.querySelectorAll('input[type="text"], input[type="number"]');
         inputs.forEach(input => {
-
-            input.addEventListener('input', function() {
-                trimValue(this); // Обрезаем пробелы в реальном времени
+            input.addEventListener('blur', function() {
+                this.value = this.value.trim(); // Обрезаем пробелы только с краев строки при потере фокуса
             });
         });
     </script>

@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests()
                 .requestMatchers("/assets/**").permitAll()
-                .requestMatchers("/facility-product/**", "/posting/**", "/products/**", "/sales/**", "/access-denied").hasAnyRole("EMPLOYEE", "ADMIN")
+                .requestMatchers("/facility-product/**", "/posting/**", "/products/**", "/sales/**", "/category/**","/access-denied").hasAnyRole("EMPLOYEE", "ADMIN")
                 .requestMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

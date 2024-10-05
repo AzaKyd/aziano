@@ -27,3 +27,8 @@ mapstruct:
 
 lombok:
   addLombokGeneratedAnnotation: true  # Добавить аннотацию @Generated для методов Lombok
+
+server:
+  servlet:
+    session:
+      timeout: 12h # This sets the timeout to 12 hours

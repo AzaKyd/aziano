@@ -241,7 +241,7 @@
                     }
                 })
                 .then(data => {
-                    unitPriceInput.value = data.price || '';
+                    unitPriceInput.value = data.price || '0' ;
                     updateTotalCost(unitPriceInput);
                 })
                 .catch(error => {

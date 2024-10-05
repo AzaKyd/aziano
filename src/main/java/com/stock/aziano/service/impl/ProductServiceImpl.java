@@ -13,6 +13,7 @@ import com.stock.aziano.utils.ImageUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getProducts() {
+
         List<Product> products = productRepository.findAll();
 
         return products.stream()
@@ -149,7 +151,6 @@ public class ProductServiceImpl implements ProductService {
 
                     Path filePath = Paths.get(projectPath + "/src/main/resources/static".concat(oldImageUrl));
 
-                    Files.delete(filePath);
 
                 } catch (IOException e) {
                     e.printStackTrace();
