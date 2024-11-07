@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://<ваш_IP_адрес>:5432/aziano   # замените на правильный IP
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.default_schema: aziano
