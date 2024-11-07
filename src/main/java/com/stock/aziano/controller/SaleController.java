@@ -1,17 +1,12 @@
 package com.stock.aziano.controller;
 
-import com.stock.aziano.dto.FacilityDto;
 import com.stock.aziano.dto.FacilityProductDto;
 import com.stock.aziano.dto.ProductDto;
 import com.stock.aziano.dto.SaleDto;
-import com.stock.aziano.exception.NotEnoughQuantityException;
 import com.stock.aziano.mappers.FacilityProductMapper;
 import com.stock.aziano.repository.FacilityProductRepository;
-import com.stock.aziano.repository.FacilityRepository;
-import com.stock.aziano.service.FacilityService;
 import com.stock.aziano.service.ProductService;
 import com.stock.aziano.service.SaleService;
-import com.stock.aziano.service.impl.SaleServiceImpl;
 import com.stock.aziano.utils.TelegramNotificationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/sales")
