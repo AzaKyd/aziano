@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ImageUtils {
 
-    private static final String UPLOAD_DIR = "src/main/resources/static/assets/upload/";
+    public static final String UPLOAD_DIR = "/var/www/uploads/";
 
     public static String saveImage(MultipartFile file) throws IOException {
         // Проверка директории
@@ -24,6 +24,6 @@ public class ImageUtils {
         Path filePath = Paths.get(UPLOAD_DIR + fileName);
         Files.copy(file.getInputStream(), filePath);
 
-        return "/assets/upload/" + fileName; // Возвращаем путь к изображению
+        return "/uploads/" + fileName; // URL для доступа к изображению
     }
 }

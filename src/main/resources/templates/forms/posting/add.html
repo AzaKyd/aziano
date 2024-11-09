@@ -172,6 +172,7 @@
         button.closest('.item').remove();
         calculateTotal();
     }
+
     function loadProducts(container) {
         fetch('/products/products')
             .then(response => {
@@ -205,11 +206,15 @@
             return;
         }
 
-        // Получаем все опции из селекта
-        const options = Array.from(select.querySelectorAll('option'));
+        // Если у select нет оригинальных опций, сохраняем их
+        if (!select.originalOptions) {
+            select.originalOptions = Array.from(select.querySelectorAll('option'));
+        }
 
-        // Фильтруем продукты и добавляем соответствующие опции
-        const filteredOptions = options.filter(option => option.textContent.toLowerCase().includes(query));
+        // Фильтруем продукты на основе оригинальных опций
+        const filteredOptions = select.originalOptions.filter(option =>
+            option.textContent.toLowerCase().includes(query)
+        );
 
         // Очищаем дропдаун, оставляя только первую опцию
         select.innerHTML = '<option value="" disabled selected>Выберите товар</option>';
