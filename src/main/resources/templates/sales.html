@@ -324,8 +324,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="sale: ${sales}">
-                      <td th:text="1"></td>
+                    <tr th:each="sale, stat : ${sales}">
+                      <td th:text="${stat.count}"></td>
                       <td th:text="${sale.product.name}"></td>
                       <td th:text="${sale.product.productCode}"></td>
                       <td th:text="${sale.product.barcode}"></td>
