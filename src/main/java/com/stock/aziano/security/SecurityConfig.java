@@ -56,12 +56,12 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails admin = User.withUsername("Azamat")
-                .password(passwordEncoder().encode("Test240923"))
+                .password(passwordEncoder().encode("123"))
                 .roles("ADMIN")
                 .build();
 
-        UserDetails employee = User.withUsername("user")
-                .password(passwordEncoder().encode("user"))
+        UserDetails employee = User.withUsername("1")
+                .password(passwordEncoder().encode("1"))
                 .roles("EMPLOYEE")
                 .build();
 
