@@ -32,7 +32,7 @@ public class PdfGenerator {
         Document document = new Document(pdfDoc);
 
 // Настройка шрифта для работы с кириллицей
-        PdfFont font1251 = PdfFontFactory.createFont("src/main/resources/static/assets/fonts/arial.ttf", "Cp1251", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont font1251 = PdfFontFactory.createFont("/var/www/uploads/arial.ttf", "Cp1251", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         document.setFont(font1251);
 
 // Уменьшаем размер шрифта
